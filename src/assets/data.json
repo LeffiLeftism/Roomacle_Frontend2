@@ -1,0 +1,227 @@
+{
+    "timings": [
+        {
+            "tStart": "08:15",
+            "tEnd": "09:00"
+        },
+        {
+            "tStart": "09:00",
+            "tEnd": "09:45"
+        },
+        {
+            "tStart": "10:00",
+            "tEnd": "10:45"
+        },
+        {
+            "tStart": "10:45",
+            "tEnd": "11:30"
+        },
+        {
+            "tStart": "11:45",
+            "tEnd": "12:30"
+        },
+        {
+            "tStart": "12:30",
+            "tEnd": "13:15"
+        },
+        {
+            "tStart": "13:30",
+            "tEnd": "14:15"
+        },
+        {
+            "tStart": "14:15",
+            "tEnd": "15:00"
+        },
+        {
+            "tStart": "15:15",
+            "tEnd": "16:00"
+        },
+        {
+            "tStart": "16:00",
+            "tEnd": "16:45"
+        },
+        {
+            "tStart": "16:45",
+            "tEnd": "17:30"
+        },
+        {
+            "tStart": "17:30",
+            "tEnd": "18:15"
+        }
+    ],
+    "persons": [
+        {
+            "name": "Visar Januzaj",
+            "titel": "M.Sc.",
+            "email": "Visar.Januzaj@hs-rm.de",
+            "homepage": "https://www.hs-rm.de/de/hochschule/personen/januzaj-visar/",
+            "telefon": "+49 (0) 6142 898 4433",
+            "room": "A2-118",
+            "visitTime": "Nach Vereinbarung"
+        },
+        {
+            "name": "Snoopy",
+            "titel": "Prof.Dr.",
+            "email": "Snoopy@peanuts.de",
+            "homepage": "https://de.wikipedia.org/wiki/Die_Peanuts",
+            "telefon": "0123",
+            "room": "ZDF",
+            "visitTime": "Täglich um 15 Uhr"
+        },
+        {
+            "name": "Dolittle",
+            "titel": "Dr.",
+            "email": "dolittle@filme.de",
+            "homepage": "",
+            "telefon": "0815-313234",
+            "room": "USA-Filme",
+            "visitTime": "Gestern"
+        },
+        {
+            "name": "Vielzulangername",
+            "titel": "Oscar, Bambi",
+            "email": "langelangelangelangelange@e-mail.adresse.de",
+            "homepage": "https://vielvielvielvielzuvieltextzeichen.net",
+            "telefon": "123456789123456789123456789000123456789",
+            "room": "GB-Filme",
+            "visitTime": "Gestern"
+        }
+    ],
+    "meetings": [
+        {
+            "_id": 0,
+            "num": "3344",
+            "name": "Aufbaukurs C++",
+            "name_short": "iAufC",
+            "std_start": 1,
+            "duration": 2,
+            "date": {
+                "start": "2021-03-15",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": true
+            },
+            "dozent": "Januzaj, Visar"
+        },
+        {
+            "_id": 2,
+            "num": "0815",
+            "name": "Digitaltechnik",
+            "name_short": "DT",
+            "std_start": 3,
+            "duration": 1,
+            "date": {
+                "start": "2021-03-15",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": true
+            },
+            "dozent": "Profil von Prof. Dr.-Ing. Barbara Lhuillier"
+        },
+        {
+            "_id": 3,
+            "num": "1444",
+            "name": "Microcomputertechnik",
+            "name_short": "MC",
+            "std_start": 4,
+            "duration": 2,
+            "date": {
+                "start": "2021-03-15",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": false
+            },
+            "dozent": "Prof. Dr. Matthias Harter"
+        },
+        {
+            "_id": 11,
+            "num": "1111",
+            "name": "Kalender Erfolg",
+            "name_short": "KE",
+            "std_start": 4,
+            "duration": 5,
+            "date": {
+                "start": "2021-03-23",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": false
+            },
+            "dozent": "Alex"
+        },
+        {
+            "_id": 4,
+            "num": "6543",
+            "name": "Mess-, Sensor-, Reglungstechnik",
+            "name_short": "MSR",
+            "std_start": 8,
+            "duration": 2,
+            "date": {
+                "start": "2021-03-15",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": true
+            },
+            "dozent": "Prof. Dr. Cumhur Baspinar"
+        },
+        {
+            "_id": 6,
+            "num": "1685",
+            "name": "Speicherprogrammierbare Steuerung",
+            "name_short": "SPS",
+            "std_start": 10,
+            "duration": 1,
+            "date": {
+                "start": "2021-03-15",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": false
+            },
+            "dozent": "Nablia, Sameh Ben"
+        },
+        {
+            "_id": 7,
+            "num": "6543",
+            "name": "Mess-, Sensor-, Reglungstechnik",
+            "name_short": "MSR",
+            "std_start": 10,
+            "duration": 2,
+            "date": {
+                "start": "2021-03-16",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": true
+            },
+            "dozent": "Prof. Dr. Cumhur Baspinar"
+        },
+        {
+            "_id": 9,
+            "num": "4711",
+            "name": "Kölnisch Wasser",
+            "name_short": "KW",
+            "std_start": 5,
+            "duration": 4,
+            "date": {
+                "start": "2021-03-18",
+                "repeatedly": "1",
+                "end": "",
+                "infinity": false
+            },
+            "dozent": "Prof. Dr. Cumhur Baspinar"
+        },
+        {
+            "_id": 10,
+            "num": "4711",
+            "name": "Kölnisch Wasser",
+            "name_short": "KW",
+            "std_start": 1,
+            "duration": 3,
+            "date": {
+                "start": "2021-03-27",
+                "repeatedly": "2",
+                "end": "2023-07-27",
+                "infinity": true
+            },
+            "dozent": "Prof. Dr. Cumhur Baspinar"
+        }
+    ]
+}
