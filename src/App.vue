@@ -3,6 +3,10 @@
     <h1>Roomacle Setup-Generator</h1>
     <button @click="importData()" class="spaceLeftRight">IMPORT</button>
     <button @click="showAll()" class="spaceLeftRight">SHOW ALL</button>
+    <button @click="sendData()" class="spaceLeftRight">SEND ALL DATA</button>
+    <button @click="recieveData()" class="spaceLeftRight">
+      RECIEVE ALL DATA
+    </button>
     <hr />
     <DeviceSetup />
     <br />
@@ -28,6 +32,68 @@ export default {
     };
   },
   methods: {
+    sendData: async function () {
+      console.log("Send all Data");
+      const data = {};
+      data.timings = this.$store.state.timings;
+      data.meetings = this.$store.state.meetings;
+      data.persons = this.$store.state.persons;
+      console.log(data);
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      const response = await fetch("/send", options);
+      const json = await response.json();
+      console.log("Response:");
+      console.log(json);
+    },
+    recieveData: async function () {
+      let response;
+      console.log("Recieve all Data");
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      let data = {
+        type: "",
+      };
+      let json = [];
+
+      data.type = "timings";
+      options.body = JSON.stringify(data);
+      response = await fetch("/recieve", options);
+      json.timings = await response.json();
+
+      data.type = "meetings";
+      options.body = JSON.stringify(data);
+      response = await fetch("/recieve", options);
+      json.meetings = await response.json();
+
+      data.type = "persons";
+      options.body = JSON.stringify(data);
+      response = await fetch("/recieve", options);
+      json.persons = await response.json();
+
+      this.$store.commit("importTimings", {
+        data: json.timings,
+      });
+      this.$store.commit("importMeetings", {
+        data: json.meetings,
+      });
+      this.$store.commit("importPersons", {
+        data: json.persons,
+      });
+
+      console.log("Response:");
+      console.log(json);
+    },
+
     importData() {
       console.log("Import Data");
       if (document.getElementById("timingsImport").checked) {

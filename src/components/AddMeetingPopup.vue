@@ -50,7 +50,7 @@
         </select>
         <br />
         DozentIn:
-        <input :id="index +'dozent'" type="text">
+        <input :id="index + 'dozent'" type="text" />
       </fieldset>
     </span>
 
@@ -69,16 +69,16 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     makeAction(name) {
       if (name == "+") {
         console.log(name);
+        this.makeAction("Save");
         let arrayLen = this.$store.state.meetings.length;
         let data = {
-          _id: arrayLen,
+          id: arrayLen,
           num: "",
           name: "",
           name_short: "",
@@ -99,9 +99,13 @@ export default {
       } else if (name == "Save") {
         console.log(name);
         let data = [];
-        for (let index = 0; index < this.$store.state.meetings.length; index++) {
+        for (
+          let index = 0;
+          index < this.$store.state.meetings.length;
+          index++
+        ) {
           let meeting = {
-            _id: index,
+            id: index,
             num: document.getElementById(index + "num").value,
             name: document.getElementById(index + "name").value,
             name_short: document.getElementById(index + "name_short").value,
@@ -114,10 +118,10 @@ export default {
             date: {
               start: document.getElementById(index + "dateStart").value,
               repeatedly: Number(
-                'document.getElementById(index + "repeatedly").value'
+                document.getElementById(index + "repeatedly").value
               ),
               end: document.getElementById(index + "dateEnd").value,
-              infinity: document.getElementById(index + "tStart").checked,
+              infinity: document.getElementById(index + "infinity").checked,
             },
             dozent: document.getElementById(index + "dozent").value,
           };
@@ -147,7 +151,7 @@ export default {
           document.getElementById(index + "tStart").value = data.std_start;
           document.getElementById(index + "tEnd").value =
             data.std_start + data.duration - 1;
-            document.getElementById(index + "dozent").value = data.dozent;
+          document.getElementById(index + "dozent").value = data.dozent;
         }
       } else if (name == "Show") {
         console.log(name);
@@ -161,7 +165,7 @@ export default {
   },
   updated() {
     this.makeAction("Reset");
-  }
+  },
 };
 </script>
 

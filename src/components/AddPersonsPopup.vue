@@ -49,6 +49,7 @@ export default {
     makeAction(name) {
       if (name == "+") {
         console.log(name);
+        this.makeAction("Save");
         let data = {
           name: "",
           titel: "",
@@ -65,11 +66,7 @@ export default {
       } else if (name == "Save") {
         console.log(name);
         let data = [];
-        for (
-          let index = 0;
-          index < this.$store.state.persons.length;
-          index++
-        ) {
+        for (let index = 0; index < this.$store.state.persons.length; index++) {
           let person = {
             name: document.getElementById(index + "name").value,
             titel: document.getElementById(index + "titel").value,
@@ -109,7 +106,7 @@ export default {
   },
   updated() {
     this.makeAction("Reset");
-  }
+  },
 };
 </script>
 
