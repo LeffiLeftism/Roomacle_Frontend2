@@ -3,23 +3,29 @@
     <h1>Create new Meeting</h1>
     <span v-for="(item, index) in this.$store.state.meetings" :key="index">
       <fieldset style="text-align: left">
-        <h3>
-          <input
-            :id="index + 'num'"
-            type="number"
-            style="width: calc(20% - 8px)"
-          />
-          <input
-            :id="index + 'name'"
-            type="text"
-            style="width: calc(70% - 8px)"
-          />
-          <input
-            :id="index + 'name_short'"
-            type="text"
-            style="width: calc(10% - 8px)"
-          />
-        </h3>
+        Name:
+        <input
+          :id="index + 'name'"
+          type="text"
+          style="width: calc(70% - 8px)"
+        />
+        <button @click="makeAction('Delete', index)" class="spaceLeftRight">
+          Delete
+        </button>
+        <br />
+        Veranst.Num.:
+        <input
+          :id="index + 'num'"
+          type="number"
+          style="width: calc(20% - 8px)"
+        />
+        Kurz.Beschr.:
+        <input
+          :id="index + 'name_short'"
+          type="text"
+          style="width: calc(10% - 8px)"
+        />
+        <br />
         Datum:
         <input :id="index + 'dateStart'" type="date" class="date" />
         <input :id="index + 'repeatedly'" type="number" class="repeatedly" />
@@ -50,7 +56,7 @@
         </select>
         <br />
         DozentIn:
-        <input :id="index +'dozent'" type="text">
+        <input :id="index + 'dozent'" type="text" />
       </fieldset>
     </span>
 
@@ -69,11 +75,10 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
-    makeAction(name) {
+    makeAction(name, ind) {
       if (name == "+") {
         console.log(name);
         let arrayLen = this.$store.state.meetings.length;
@@ -99,7 +104,11 @@ export default {
       } else if (name == "Save") {
         console.log(name);
         let data = [];
-        for (let index = 0; index < this.$store.state.meetings.length; index++) {
+        for (
+          let index = 0;
+          index < this.$store.state.meetings.length;
+          index++
+        ) {
           let meeting = {
             _id: index,
             num: document.getElementById(index + "num").value,
@@ -114,10 +123,10 @@ export default {
             date: {
               start: document.getElementById(index + "dateStart").value,
               repeatedly: Number(
-                'document.getElementById(index + "repeatedly").value'
+                document.getElementById(index + "repeatedly").value
               ),
               end: document.getElementById(index + "dateEnd").value,
-              infinity: document.getElementById(index + "tStart").checked,
+              infinity: document.getElementById(index + "infinity").checked,
             },
             dozent: document.getElementById(index + "dozent").value,
           };
@@ -144,16 +153,33 @@ export default {
             data.date.repeatedly;
           document.getElementById(index + "infinity").checked =
             data.date.infinity;
-          document.getElementById(index + "tStart").value = data.std_start;
+          document.getElementById(index + "infinity").value = data.std_start;
           document.getElementById(index + "tEnd").value =
             data.std_start + data.duration - 1;
-            document.getElementById(index + "dozent").value = data.dozent;
+          document.getElementById(index + "dozent").value = data.dozent;
         }
       } else if (name == "Show") {
         console.log(name);
         let data = this.$store.state.meetings;
         console.log(data);
+      } else if (name == "Delete") {
+        console.log(name);
+        console.log("Ind: " + ind);
+        let data = this.$store.state.meetings;
+        for (let n = ind; n < data.length - 1; n++) {
+          console.log("N: " + n);
+          this.moveInArray(n + 1, n, data);
+        }
+        this.makeAction("-");
+      } else {
+        console.log("Error: On makeAction");
       }
+    },
+    moveInArray(pos1, pos2, array) {
+      let spacer = array[pos1];
+      array[pos1] = array[pos2];
+      array[pos2] = spacer;
+      console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
     },
   },
   mounted() {
@@ -161,7 +187,7 @@ export default {
   },
   updated() {
     this.makeAction("Reset");
-  }
+  },
 };
 </script>
 
