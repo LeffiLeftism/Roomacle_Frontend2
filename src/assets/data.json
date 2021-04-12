@@ -128,7 +128,7 @@
             "date": {
                 "start": "2021-03-15",
                 "repeatedly": 1,
-                "end": "",
+                "end": "2021-06-26",
                 "infinity": false
             },
             "dozent": "Prof. Dr. Matthias Harter"
@@ -142,8 +142,8 @@
             "duration": 5,
             "date": {
                 "start": "2021-03-23",
-                "repeatedly": 1,
-                "end": "",
+                "repeatedly": 2,
+                "end": "2021-06-19",
                 "infinity": false
             },
             "dozent": "Alex"
@@ -173,7 +173,7 @@
             "date": {
                 "start": "2021-03-15",
                 "repeatedly": 1,
-                "end": "",
+                "end": "2021-05-10",
                 "infinity": false
             },
             "dozent": "Nablia, Sameh Ben"
@@ -203,7 +203,7 @@
             "date": {
                 "start": "2021-03-18",
                 "repeatedly": 1,
-                "end": "",
+                "end": "2021-06-16",
                 "infinity": false
             },
             "dozent": "Prof. Dr. Cumhur Baspinar"
@@ -218,7 +218,7 @@
             "date": {
                 "start": "2021-03-27",
                 "repeatedly": 2,
-                "end": "2023-07-27",
+                "end": "",
                 "infinity": true
             },
             "dozent": "Prof. Dr. Cumhur Baspinar"

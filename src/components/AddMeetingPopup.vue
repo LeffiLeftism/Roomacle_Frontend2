@@ -152,6 +152,12 @@ export default {
           document.getElementById(index + "tEnd").value =
             data.std_start + data.duration - 1;
           document.getElementById(index + "dozent").value = data.dozent;
+          if (data.date.infinity) {
+            document.getElementById(index + "dateEnd").disabled = true;
+            document.getElementById(index + "dateEnd").background = true;
+          } else {
+            document.getElementById(index + "dateEnd").disabled = false;
+          }
         }
       } else if (name == "Show") {
         console.log(name);
