@@ -101,6 +101,8 @@
                 "end": "",
                 "infinity": true
             },
+            "semester": "3+4",
+            "studigang": "MB, iING, IWI",
             "dozent": "Januzaj, Visar"
         },
         {
@@ -116,6 +118,8 @@
                 "end": "",
                 "infinity": true
             },
+            "semester": "1,2,3",
+            "studigang": "iING",
             "dozent": "Profil von Prof. Dr.-Ing. Barbara Lhuillier"
         },
         {
@@ -131,6 +135,8 @@
                 "end": "2021-06-26",
                 "infinity": false
             },
+            "semester": "5",
+            "studigang": "MB, iING",
             "dozent": "Prof. Dr. Matthias Harter"
         },
         {
@@ -146,6 +152,8 @@
                 "end": "2021-06-19",
                 "infinity": false
             },
+            "semester": "5+6",
+            "studigang": "MB, iING, IWI",
             "dozent": "Alex"
         },
         {
@@ -161,6 +169,8 @@
                 "end": "",
                 "infinity": true
             },
+            "semester": "7",
+            "studigang": "MB, iING, IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         },
         {
@@ -176,6 +186,8 @@
                 "end": "2021-05-10",
                 "infinity": false
             },
+            "semester": "3",
+            "studigang": "iING, IWI",
             "dozent": "Nablia, Sameh Ben"
         },
         {
@@ -191,6 +203,8 @@
                 "end": "",
                 "infinity": true
             },
+            "semester": "4",
+            "studigang": "IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         },
         {
@@ -206,6 +220,8 @@
                 "end": "2021-06-16",
                 "infinity": false
             },
+            "semester": "5",
+            "studigang": "MB",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         },
         {
@@ -221,6 +237,8 @@
                 "end": "",
                 "infinity": true
             },
+            "semester": "1+2",
+            "studigang": "MB, iING, IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         }
     ]

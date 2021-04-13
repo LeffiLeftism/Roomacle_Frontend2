@@ -49,6 +49,12 @@
           </option>
         </select>
         <br />
+        Studiengänge:
+        <input :id="index + 'studigang'" type="text" />
+
+        Semester:
+        <input :id="index + 'semester'" type="text" />
+        <br />
         DozentIn:
         <input :id="index + 'dozent'" type="text" />
       </fieldset>
@@ -90,6 +96,8 @@ export default {
             end: "",
             infinity: true,
           },
+          semester: "",
+          studigang: "",
           dozent: "",
         };
         this.$store.state.meetings.push(data);
@@ -123,6 +131,8 @@ export default {
               end: document.getElementById(index + "dateEnd").value,
               infinity: document.getElementById(index + "infinity").checked,
             },
+            semester: document.getElementById(index + "semester").value,
+            studigang: document.getElementById(index + "studigang").value,
             dozent: document.getElementById(index + "dozent").value,
           };
           data.push(meeting);
@@ -151,6 +161,8 @@ export default {
           document.getElementById(index + "tStart").value = data.std_start;
           document.getElementById(index + "tEnd").value =
             data.std_start + data.duration - 1;
+          document.getElementById(index + "semester").value = data.semester;
+          document.getElementById(index + "studigang").value = data.studigang;
           document.getElementById(index + "dozent").value = data.dozent;
           if (data.date.infinity) {
             document.getElementById(index + "dateEnd").disabled = true;
