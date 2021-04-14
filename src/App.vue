@@ -32,13 +32,38 @@ export default {
     };
   },
   methods: {
+    saveSetup() {
+      let roomtype;
+      let typeA = document.getElementById("buero").checked;
+      let typeB = document.getElementById("vl").checked;
+      if (typeA) {
+        roomtype = "buero";
+      } else if (typeB) {
+        roomtype = "vl";
+      }
+      let data = [
+        {
+          room: {
+            num: document.getElementById("raumnummer").value,
+            type: roomtype,
+            seats: document.getElementById("seats").value,
+          },
+          fachbereich: document.getElementById("fachbereich").value,
+          studienbereich: document.getElementById("studienbereich").value,
+        },
+      ];
+      console.log(data);
+      this.$store.state.setup = data;
+    },
     sendData: async function () {
+      this.saveSetup();
       console.log("Send all Data");
-      const data = {};
+      let data = {};
       data.timings = this.$store.state.timings;
       data.meetings = this.$store.state.meetings;
       data.persons = this.$store.state.persons;
-      console.log(data);
+      data.setup = this.$store.state.setup;
+      //console.log(data);
       const options = {
         method: "POST",
         headers: {
@@ -80,6 +105,11 @@ export default {
       response = await fetch("/recieve", options);
       json.persons = await response.json();
 
+      data.type = "setup";
+      options.body = JSON.stringify(data);
+      response = await fetch("/recieve", options);
+      json.setup = await response.json();
+
       this.$store.commit("importTimings", {
         data: json.timings,
       });
@@ -88,6 +118,9 @@ export default {
       });
       this.$store.commit("importPersons", {
         data: json.persons,
+      });
+      this.$store.commit("importSetup", {
+        data: json.setup,
       });
 
       console.log("Response:");
@@ -111,7 +144,25 @@ export default {
           data: this.data.persons,
         });
       }
+      this.$store.commit("importSetup", {
+        data: this.data.setup,
+      });
       console.log(this.$store.state);
+
+      if (this.$store.state.setup.room.type == "buero") {
+        document.getElementById("buero").checked = true;
+      } else if (this.$store.state.setup.room.type == "vl") {
+        document.getElementById("vl").checked = true;
+      }
+      document.getElementById(
+        "raumnummer"
+      ).value = this.$store.state.setup.room.num;
+      document.getElementById(
+        "fachbereich"
+      ).value = this.$store.state.setup.fachbereich;
+      document.getElementById(
+        "studienbereich"
+      ).value = this.$store.state.setup.studienbereich;
     },
     showAll() {
       console.log(this.$store.state);

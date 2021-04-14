@@ -8,6 +8,7 @@ export default new Vuex.Store({
         timings: [],
         meetings: [],
         persons: [],
+        setup: {},
     },
     getters: {},
     mutations: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
         },
         importPersons(state, payload) {
             state.persons = payload.data;
+        },
+        importSetup(state, payload) {
+            state.setup = payload.data;
         },
     },
     actions: {}

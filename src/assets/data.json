@@ -241,5 +241,14 @@
             "studigang": "MB, iING, IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         }
-    ]
+    ],
+    "setup": {
+        "room": {
+            "num": "A-317",
+            "type": "buero",
+            "seats": "30"
+        },
+        "fachbereich": "Ing. Wissenschaften",
+        "studienbereich": "Angewandte Physik und Medizintechnik"
+    }
 }
