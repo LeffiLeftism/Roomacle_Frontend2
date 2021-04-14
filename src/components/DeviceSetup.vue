@@ -38,8 +38,7 @@
 export default {
   methods: {
     writeSetup() {
-      let data = this.$store.state.setup[0];
-      console.log(data.room.num);
+      let data = this.$store.state.setup;
       
       document.getElementById("raumnummer").value = data.room.num;
       document.getElementById("fachbereich").value = data.fachbereich;

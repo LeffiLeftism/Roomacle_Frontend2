@@ -41,18 +41,16 @@ export default {
       } else if (typeB) {
         roomtype = "vl";
       }
-      let data = [
-        {
-          room: {
-            num: document.getElementById("raumnummer").value,
-            type: roomtype,
-            seats: document.getElementById("seats").value,
-          },
-          fachbereich: document.getElementById("fachbereich").value,
-          studienbereich: document.getElementById("studienbereich").value,
+      let data = {
+        room: {
+          num: document.getElementById("raumnummer").value,
+          type: roomtype,
+          seats: document.getElementById("seats").value,
         },
-      ];
-      console.log(data);
+        fachbereich: document.getElementById("fachbereich").value,
+        studienbereich: document.getElementById("studienbereich").value,
+      };
+      //console.log(data);
       this.$store.state.setup = data;
     },
     sendData: async function () {
@@ -120,8 +118,9 @@ export default {
         data: json.persons,
       });
       this.$store.commit("importSetup", {
-        data: json.setup,
+        data: json.setup[0],
       });
+      console.log(this.$store.state.setup);
 
       console.log("Response:");
       console.log(json);
