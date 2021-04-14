@@ -25,7 +25,11 @@
         <input :id="index + 'repeatedly'" type="number" class="repeatedly" />
         wl., bis
         <input :id="index + 'dateEnd'" type="date" />
-        <input :id="index + 'infinity'" type="checkbox" />
+        <input
+          :id="index + 'infinity'"
+          type="checkbox"
+          @click="inputDisabler(index, ['infinity'], ['dateEnd'])"
+        />
         Dauerhaft
         <br />
         Zeit:
@@ -78,6 +82,22 @@ export default {
     return {};
   },
   methods: {
+    inputDisabler(index, idSource, idDestinationDisable, idDestinationEnable) {
+      if (typeof idDestinationDisable != "undefined") {
+        idDestinationDisable.forEach((element) => {
+          document.getElementById(
+            index + element
+          ).disabled = document.getElementById(index + idSource).checked;
+        });
+      }
+      if (typeof idDestinationEnable != "undefined") {
+        idDestinationEnable.forEach((element) => {
+          document.getElementById(
+            index + element
+          ).disabled = !document.getElementById(index + idSource).checked;
+        });
+      }
+    },
     makeAction(name) {
       if (name == "+") {
         console.log(name);

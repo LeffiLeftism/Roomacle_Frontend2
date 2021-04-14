@@ -7,7 +7,7 @@
           :class="[this.countTimings > 0 ? 'green' : 'red']"
         ></span>
         <h2 class="spaceLeftRight">Zeiten</h2>
-        <button @click="openModal('timings')">+</button>
+        <button id="timingsAdd" @click="openModal('timings')">+</button>
         <input id="timingsImport" type="checkbox">
       </span>
       <span class="horizontal">
@@ -16,7 +16,7 @@
           :class="[this.countMeetings > 0 ? 'green' : 'red']"
         ></span>
         <h2 class="spaceLeftRight">Veranstaltungen</h2>
-        <button @click="openModal('meetings')">+</button>
+        <button id="meetingsAdd" @click="openModal('meetings')">+</button>
         <input id="meetingsImport" type="checkbox">
       </span>
       <span class="horizontal">
@@ -25,7 +25,7 @@
           :class="[this.countPersons > 0 ? 'green' : 'red']"
         ></span>
         <h2 class="spaceLeftRight">Personen</h2>
-        <button @click="openModal('persons')">+</button>
+        <button id="personsAdd" @click="openModal('persons')">+</button>
         <input id="personsImport" type="checkbox">
       </span>
     </fieldset>
