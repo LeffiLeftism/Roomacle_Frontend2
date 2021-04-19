@@ -129,6 +129,12 @@ export default {
       this.$store.commit("importPersons", {
         data: json.persons,
       });
+      this.$store.commit("importAnnouncements", {
+        data: json.announcements,
+      });
+      this.$store.commit("importLostAndFound", {
+        data: json.lostandfounds,
+      });
       this.$store.commit("importSetup", {
         data: json.setup[0],
       });
