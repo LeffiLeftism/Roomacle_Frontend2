@@ -31,7 +31,11 @@
         <input :id="index + 'repeatedly'" type="number" class="repeatedly" />
         wl., bis
         <input :id="index + 'dateEnd'" type="date" />
-        <input :id="index + 'infinity'" type="checkbox" />
+        <input
+          :id="index + 'infinity'"
+          type="checkbox"
+          @click="inputDisabler(index, ['infinity'], ['dateEnd'])"
+        />
         Dauerhaft
         <br />
         Zeit:
@@ -54,6 +58,12 @@
             {{ ind + 1 }}.Std. {{ it.tEnd }}
           </option>
         </select>
+        <br />
+        Studiengänge:
+        <input :id="index + 'studigang'" type="text" />
+
+        Semester:
+        <input :id="index + 'semester'" type="text" />
         <br />
         DozentIn:
         <input :id="index + 'dozent'" type="text" />
@@ -78,12 +88,29 @@ export default {
     return {};
   },
   methods: {
+    inputDisabler(index, idSource, idDestinationDisable, idDestinationEnable) {
+      if (typeof idDestinationDisable != "undefined") {
+        idDestinationDisable.forEach((element) => {
+          document.getElementById(
+            index + element
+          ).disabled = document.getElementById(index + idSource).checked;
+        });
+      }
+      if (typeof idDestinationEnable != "undefined") {
+        idDestinationEnable.forEach((element) => {
+          document.getElementById(
+            index + element
+          ).disabled = !document.getElementById(index + idSource).checked;
+        });
+      }
+    },
     makeAction(name, ind) {
       if (name == "+") {
         console.log(name);
+        this.makeAction("Save");
         let arrayLen = this.$store.state.meetings.length;
         let data = {
-          _id: arrayLen,
+          id: arrayLen,
           num: "",
           name: "",
           name_short: "",
@@ -95,6 +122,8 @@ export default {
             end: "",
             infinity: true,
           },
+          semester: "",
+          studigang: "",
           dozent: "",
         };
         this.$store.state.meetings.push(data);
@@ -110,7 +139,7 @@ export default {
           index++
         ) {
           let meeting = {
-            _id: index,
+            id: index,
             num: document.getElementById(index + "num").value,
             name: document.getElementById(index + "name").value,
             name_short: document.getElementById(index + "name_short").value,
@@ -128,6 +157,8 @@ export default {
               end: document.getElementById(index + "dateEnd").value,
               infinity: document.getElementById(index + "infinity").checked,
             },
+            semester: document.getElementById(index + "semester").value,
+            studigang: document.getElementById(index + "studigang").value,
             dozent: document.getElementById(index + "dozent").value,
           };
           data.push(meeting);
@@ -156,7 +187,15 @@ export default {
           document.getElementById(index + "infinity").value = data.std_start;
           document.getElementById(index + "tEnd").value =
             data.std_start + data.duration - 1;
+          document.getElementById(index + "semester").value = data.semester;
+          document.getElementById(index + "studigang").value = data.studigang;
           document.getElementById(index + "dozent").value = data.dozent;
+          if (data.date.infinity) {
+            document.getElementById(index + "dateEnd").disabled = true;
+            document.getElementById(index + "dateEnd").background = true;
+          } else {
+            document.getElementById(index + "dateEnd").disabled = false;
+          }
         }
       } else if (name == "Show") {
         console.log(name);

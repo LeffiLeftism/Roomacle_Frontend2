@@ -2,7 +2,7 @@
   <div id="AddTimingsPopup">
     <h1>Create new Timing</h1>
     <span v-for="(item, index) in this.$store.state.timings" :key="index">
-      <span class="small" style="width:50px">{{ index + 1 }}. Std:</span>
+      <span class="small" style="width: 50px">{{ index + 1 }}. Std:</span>
       <input :id="index + 'tStart'" class="spaceLeftRight" type="time" />
       -
       <input :id="index + 'tEnd'" class="spaceLeftRight" type="time" />
@@ -33,6 +33,7 @@ export default {
     makeAction(name) {
       if (name == "+") {
         console.log(name);
+        this.makeAction("Save");
         let timing = {
           tStart: "",
           tEnd: "",
@@ -75,7 +76,7 @@ export default {
   },
   updated() {
     this.makeAction("Reset");
-  }
+  },
 };
 </script>
 

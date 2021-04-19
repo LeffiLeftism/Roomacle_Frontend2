@@ -89,7 +89,7 @@
     ],
     "meetings": [
         {
-            "_id": 0,
+            "id": 0,
             "num": "3344",
             "name": "Aufbaukurs C++",
             "name_short": "iAufC",
@@ -97,14 +97,16 @@
             "duration": 2,
             "date": {
                 "start": "2021-03-15",
-                "repeatedly": "1",
+                "repeatedly": 1,
                 "end": "",
                 "infinity": true
             },
+            "semester": "3+4",
+            "studigang": "MB, iING, IWI",
             "dozent": "Januzaj, Visar"
         },
         {
-            "_id": 2,
+            "id": 2,
             "num": "0815",
             "name": "Digitaltechnik",
             "name_short": "DT",
@@ -112,14 +114,16 @@
             "duration": 1,
             "date": {
                 "start": "2021-03-15",
-                "repeatedly": "1",
+                "repeatedly": 1,
                 "end": "",
                 "infinity": true
             },
+            "semester": "1,2,3",
+            "studigang": "iING",
             "dozent": "Profil von Prof. Dr.-Ing. Barbara Lhuillier"
         },
         {
-            "_id": 3,
+            "id": 3,
             "num": "1444",
             "name": "Microcomputertechnik",
             "name_short": "MC",
@@ -127,14 +131,16 @@
             "duration": 2,
             "date": {
                 "start": "2021-03-15",
-                "repeatedly": "1",
-                "end": "",
+                "repeatedly": 1,
+                "end": "2021-06-26",
                 "infinity": false
             },
+            "semester": "5",
+            "studigang": "MB, iING",
             "dozent": "Prof. Dr. Matthias Harter"
         },
         {
-            "_id": 11,
+            "id": 11,
             "num": "1111",
             "name": "Kalender Erfolg",
             "name_short": "KE",
@@ -142,14 +148,16 @@
             "duration": 5,
             "date": {
                 "start": "2021-03-23",
-                "repeatedly": "1",
-                "end": "",
+                "repeatedly": 2,
+                "end": "2021-06-19",
                 "infinity": false
             },
+            "semester": "5+6",
+            "studigang": "MB, iING, IWI",
             "dozent": "Alex"
         },
         {
-            "_id": 4,
+            "id": 4,
             "num": "6543",
             "name": "Mess-, Sensor-, Reglungstechnik",
             "name_short": "MSR",
@@ -157,14 +165,16 @@
             "duration": 2,
             "date": {
                 "start": "2021-03-15",
-                "repeatedly": "1",
+                "repeatedly": 1,
                 "end": "",
                 "infinity": true
             },
+            "semester": "7",
+            "studigang": "MB, iING, IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         },
         {
-            "_id": 6,
+            "id": 6,
             "num": "1685",
             "name": "Speicherprogrammierbare Steuerung",
             "name_short": "SPS",
@@ -172,14 +182,16 @@
             "duration": 1,
             "date": {
                 "start": "2021-03-15",
-                "repeatedly": "1",
-                "end": "",
+                "repeatedly": 1,
+                "end": "2021-05-10",
                 "infinity": false
             },
+            "semester": "3",
+            "studigang": "iING, IWI",
             "dozent": "Nablia, Sameh Ben"
         },
         {
-            "_id": 7,
+            "id": 7,
             "num": "6543",
             "name": "Mess-, Sensor-, Reglungstechnik",
             "name_short": "MSR",
@@ -187,14 +199,16 @@
             "duration": 2,
             "date": {
                 "start": "2021-03-16",
-                "repeatedly": "1",
+                "repeatedly": 1,
                 "end": "",
                 "infinity": true
             },
+            "semester": "4",
+            "studigang": "IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         },
         {
-            "_id": 9,
+            "id": 9,
             "num": "4711",
             "name": "Kölnisch Wasser",
             "name_short": "KW",
@@ -202,14 +216,16 @@
             "duration": 4,
             "date": {
                 "start": "2021-03-18",
-                "repeatedly": "1",
-                "end": "",
+                "repeatedly": 1,
+                "end": "2021-06-16",
                 "infinity": false
             },
+            "semester": "5",
+            "studigang": "MB",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         },
         {
-            "_id": 10,
+            "id": 10,
             "num": "4711",
             "name": "Kölnisch Wasser",
             "name_short": "KW",
@@ -217,11 +233,50 @@
             "duration": 3,
             "date": {
                 "start": "2021-03-27",
-                "repeatedly": "2",
-                "end": "2023-07-27",
+                "repeatedly": 2,
+                "end": "",
                 "infinity": true
             },
+            "semester": "1+2",
+            "studigang": "MB, iING, IWI",
             "dozent": "Prof. Dr. Cumhur Baspinar"
         }
-    ]
+    ],
+    "lostandfounds": [
+        {
+            "date": "2021-05-01",
+            "title": "Titel1",
+            "description": "Beschreibung 1",
+            "creator": "Alex"
+        },
+        {
+            "date": "2021-05-02",
+            "title": "Titel2",
+            "description": "Beschreibung 2",
+            "creator": "Visar"
+        }
+    ],
+    "announcements": [
+        {
+            "date": "2021-04-20",
+            "time": "11:45",
+            "content": "Hier steht irdengwann mal Text!!!",
+            "creator": "Alex"
+        },
+        {
+            "date": "2021-04-19",
+            "time": "13:51",
+            "content": "Auch hier kann Text stehen",
+            "creator": "Visar"
+        }
+    ],
+    "setup": {
+        "room": {
+            "num": "A-317",
+            "type": "buero",
+            "seats": "30"
+        },
+        "fachbereich": "Ing. Wissenschaften",
+        "studienbereich": "Angewandte Physik und Medizintechnik"
+    }
 }
