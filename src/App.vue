@@ -132,7 +132,7 @@ export default {
       this.$store.commit("importAnnouncements", {
         data: json.announcements,
       });
-      this.$store.commit("importLostAndFound", {
+      this.$store.commit("importLostAndFounds", {
         data: json.lostandfounds,
       });
       this.$store.commit("importSetup", {
