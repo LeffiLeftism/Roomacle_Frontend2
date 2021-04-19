@@ -15,6 +15,10 @@
         <span class="small">Ersteller:</span>
         <input :id="index + 'creator'" type="text" class="wide" />
         <br />
+        <button @click="makeAction('Delete', index)" class="spaceLeftRight">
+          Delete
+        </button>
+        <br />
       </fieldset>
     </span>
 
@@ -40,7 +44,7 @@ export default {
     };
   },
   methods: {
-    makeAction(name) {
+    makeAction(name, ind) {
       if (name == "+") {
         console.log(name);
         this.makeAction("Save");
@@ -84,7 +88,24 @@ export default {
         console.log(name);
         let data = this.$store.state.lostandfounds;
         console.log(data);
+      } else if (name == "Delete") {
+        console.log(name);
+        console.log("Ind: " + ind);
+        let data = this.$store.state.lostandfounds;
+        for (let n = ind; n < data.length - 1; n++) {
+          console.log("N: " + n);
+          this.moveInArray(n + 1, n, data);
+        }
+        this.makeAction("-");
+      } else {
+        console.log("Error: On makeAction");
       }
+    },
+    moveInArray(pos1, pos2, array) {
+      let spacer = array[pos1];
+      array[pos1] = array[pos2];
+      array[pos2] = spacer;
+      console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
     },
   },
   created() {},
