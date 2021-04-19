@@ -242,6 +242,34 @@
             "dozent": "Prof. Dr. Cumhur Baspinar"
         }
     ],
+    "lostandfounds": [
+        {
+            "date": "2021-05-01",
+            "title": "Titel1",
+            "description": "Beschreibung 1",
+            "creator": "Alex"
+        },
+        {
+            "date": "2021-05-02",
+            "title": "Titel2",
+            "description": "Beschreibung 2",
+            "creator": "Visar"
+        }
+    ],
+    "announcements": [
+        {
+            "date": "2021-04-20",
+            "time": "11:45",
+            "content": "Hier steht irdengwann mal Text!!!",
+            "creator": "Alex"
+        },
+        {
+            "date": "2021-04-19",
+            "time": "13:51",
+            "content": "Auch hier kann Text stehen",
+            "creator": "Visar"
+        }
+    ],
     "setup": {
         "room": {
             "num": "A-317",
