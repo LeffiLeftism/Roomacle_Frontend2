@@ -15,6 +15,8 @@
         <span class="small">Ersteller:</span>
         <input :id="index + 'creator'" type="text" class="wide" />
         <br />
+        <span class="small">Announcement:</span>
+        <input :id="index + 'announcement'" type="checkbox">
         <button @click="makeAction('Delete', index)" class="spaceLeftRight">
           Delete
         </button>
@@ -53,6 +55,7 @@ export default {
           time: "",
           content: "",
           creator: "",
+          announcement: "",
         };
         this.$store.state.announcements.push(announcement);
       } else if (name == "-") {
@@ -71,6 +74,7 @@ export default {
             time: document.getElementById(index + "time").value,
             content: document.getElementById(index + "content").value,
             creator: document.getElementById(index + "creator").value,
+            announcement: document.getElementById(index + "announcement").checked,
           };
           data.push(std);
         }
@@ -88,6 +92,8 @@ export default {
             data[index].content;
           document.getElementById(index + "creator").value =
             data[index].creator;
+          document.getElementById(index + "announcement").checked =
+            data[index].announcement;
         }
       } else if (name == "Show") {
         console.log(name);

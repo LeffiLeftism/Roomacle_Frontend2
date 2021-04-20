@@ -8,7 +8,6 @@ export default new Vuex.Store({
         timings: [],
         meetings: [],
         persons: [],
-        lostandfounds: [],
         announcements: [],
         setup: {},
     },
@@ -22,9 +21,6 @@ export default new Vuex.Store({
         },
         importPersons(state, payload) {
             state.persons = payload.data;
-        },
-        importLostAndFounds(state, payload) {
-            state.lostandfounds = payload.data;
         },
         importAnnouncements(state, payload) {
             state.announcements = payload.data;

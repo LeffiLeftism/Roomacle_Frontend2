@@ -61,7 +61,6 @@ export default {
       data.meetings = this.$store.state.meetings;
       data.persons = this.$store.state.persons;
       data.setup = this.$store.state.setup;
-      data.lostandfounds = this.$store.state.lostandfounds;
       data.announcements = this.$store.state.announcements;
       //console.log(data);
       const options = {
@@ -105,11 +104,6 @@ export default {
       response = await fetch("/recieve", options);
       json.persons = await response.json();
 
-      data.type = "lostandfounds";
-      options.body = JSON.stringify(data);
-      response = await fetch("/recieve", options);
-      json.lostandfounds = await response.json();
-
       data.type = "announcements";
       options.body = JSON.stringify(data);
       response = await fetch("/recieve", options);
@@ -131,9 +125,6 @@ export default {
       });
       this.$store.commit("importAnnouncements", {
         data: json.announcements,
-      });
-      this.$store.commit("importLostAndFounds", {
-        data: json.lostandfounds,
       });
       this.$store.commit("importSetup", {
         data: json.setup[0],
@@ -161,11 +152,6 @@ export default {
           data: this.data.persons,
         });
       }
-      if (document.getElementById("importLostAndFounds").checked) {
-        this.$store.commit("importLostAndFounds", {
-          data: this.data.lostandfounds,
-        });
-      }
       if (document.getElementById("announcementsImport").checked) {
         this.$store.commit("importAnnouncements", {
           data: this.data.announcements,
@@ -173,7 +159,6 @@ export default {
       }
 
       
-            console.log(this.$store.state.lostandfounds.length);
             console.log(this.$store.state.announcements.length);
             console.log(this.$store.state.persons.length);
 

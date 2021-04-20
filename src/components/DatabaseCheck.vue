@@ -39,16 +39,6 @@
         <span class="horizontal">
           <span
             class="dot"
-            :class="[this.countLostAndFounds > 0 ? 'green' : 'red']"
-          ></span>
-          <h2 class="spaceLeftRight">LostAndFound</h2>
-          <button id="lostandfoundsAdd" @click="openModal('lostandfounds')">+</button>
-          <input id="importLostAndFounds" type="checkbox" />
-        </span>
-        <!-- -->
-        <span class="horizontal">
-          <span
-            class="dot"
             :class="[this.countAnnouncements > 0 ? 'green' : 'red']"
           ></span>
           <h2 class="spaceLeftRight">Announcements</h2>
@@ -66,7 +56,6 @@ import db from "../assets/data.json";
 import AddTimingsPopup from "../components/AddTimingsPopup.vue";
 import AddMeetingPopup from "../components/AddMeetingPopup.vue";
 import AddPersonsPopup from "../components/AddPersonsPopup.vue";
-import AddLostAndFoundsPopup from "../components/AddLostAndFoundsPopup.vue";
 import AddAnnouncementsPopup from "../components/AddAnnouncementsPopup.vue";
 
 export default {
@@ -77,7 +66,6 @@ export default {
       countTimings: this.$store.state.timings.length,
       countMeetings: this.$store.state.meetings.length,
       countPersons: this.$store.state.persons.length,
-      countLostAndFounds: this.$store.state.lostandfounds.length,
       countAnnouncements: this.$store.state.announcements.length,
     };
   },
@@ -86,7 +74,6 @@ export default {
       this.countTimings = this.$store.state.timings.length;
       this.countMeetings = this.$store.state.meetings.length;
       this.countPersons = this.$store.state.persons.length;
-      this.countLostAndFounds = this.$store.state.lostandfounds.length;
       this.countAnnouncements = this.$store.state.announcements.length;
     },
     openModal(name) {
@@ -109,13 +96,6 @@ export default {
           this.$modal.show(AddPersonsPopup, {}, { height: "auto" });
         } catch (err) {
           console.log("Error on AddPersonsPopup.");
-          console.log(err);
-        }
-      } else if (name == "lostandfounds") {
-        try {
-          this.$modal.show(AddLostAndFoundsPopup, {}, { height: "auto" });
-        } catch (err) {
-          console.log("Error on AddLostAndFoundsPopup.");
           console.log(err);
         }
       } else if (name == "announcements") {
