@@ -9,6 +9,9 @@
         <span class="small">Uhrzeit:</span>
         <input :id="index + 'time'" type="time" class="wide" />
         <br />
+        <span class="small">Titel:</span>
+        <input :id="index + 'title'" type="text" class="wide" />
+        <br />
         <span class="small">Nachricht:</span>
         <input :id="index + 'content'" type="text" class="wide" />
         <br />
@@ -55,6 +58,7 @@ export default {
           time: "",
           content: "",
           creator: "",
+          title: "",
           announcement: "",
         };
         this.$store.state.announcements.push(announcement);
@@ -74,6 +78,7 @@ export default {
             time: document.getElementById(index + "time").value,
             content: document.getElementById(index + "content").value,
             creator: document.getElementById(index + "creator").value,
+            title: document.getElementById(index + "title").value,
             announcement: document.getElementById(index + "announcement").checked,
           };
           data.push(std);
@@ -92,6 +97,8 @@ export default {
             data[index].content;
           document.getElementById(index + "creator").value =
             data[index].creator;
+          document.getElementById(index + "title").value =
+            data[index].title;
           document.getElementById(index + "announcement").checked =
             data[index].announcement;
         }
