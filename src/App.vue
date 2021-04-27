@@ -117,19 +117,31 @@ export default {
       this.$store.commit("importTimings", {
         data: json.timings,
       });
-      this.$store.commit("importMeetings", {
-        data: json.meetings,
-      });
-      this.$store.commit("importPersons", {
-        data: json.persons,
-      });
-      this.$store.commit("importAnnouncements", {
-        data: json.announcements,
-      });
+
+      for (let index = 0; index < json.meetings.length; index++) {
+        this.$store.commit("importMeetings", {
+          data: json.meetings[index],
+          index: index,
+        });
+      }
+
+      for (let index = 0; index < json.persons.length; index++) {
+        this.$store.commit("importPersons", {
+          data: json.persons[index],
+          index: index,
+        });
+      }
+
+      for (let index = 0; index < json.announcements.length; index++) {
+        this.$store.commit("importAnnouncements", {
+          data: json.announcements[index],
+          index: index,
+        });
+      }
+
       this.$store.commit("importSetup", {
         data: json.setup[0],
       });
-      console.log(this.$store.state.setup);
 
       console.log("Response:");
       console.log(json);
@@ -143,26 +155,35 @@ export default {
         });
       }
       if (document.getElementById("meetingsImport").checked) {
-        this.$store.commit("importMeetings", {
-          data: this.data.meetings,
-        });
+        for (let index = 0; index < this.data.meetings.length; index++) {
+          const element = this.data.meetings[index];
+          this.$store.commit("importMeetings", {
+            data: element,
+            index: index,
+          });
+        }
       }
       if (document.getElementById("personsImport").checked) {
-        this.$store.commit("importPersons", {
-          data: this.data.persons,
-        });
+        for (let index = 0; index < this.data.persons.length; index++) {
+          const element = this.data.persons[index];
+          this.$store.commit("importPersons", {
+            data: element,
+            index: index,
+          });
+        }
       }
       if (document.getElementById("announcementsImport").checked) {
-        this.$store.commit("importAnnouncements", {
-          data: this.data.announcements,
-        });
+        for (let index = 0; index < this.data.announcements.length; index++) {
+          const element = this.data.announcements[index];
+          this.$store.commit("importAnnouncements", {
+            data: element,
+            index: index,
+          });
+        }
       }
 
-      
-            console.log(this.$store.state.announcements.length);
-            console.log(this.$store.state.persons.length);
-
-
+      console.log(this.$store.state.announcements.length);
+      console.log(this.$store.state.persons.length);
 
       // Setup wird importiert und angezeigt
       this.$store.commit("importSetup", {
@@ -224,7 +245,7 @@ h3 {
 }
 .small {
   display: inline-flex;
-  width: 100px;
+  width: 120px;
 }
 .wide {
   width: 300px;

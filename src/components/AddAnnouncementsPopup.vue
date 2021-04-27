@@ -1,31 +1,40 @@
 <template>
   <div id="AddAnnouncementsPopup">
-    <h1>Create new Timing</h1>
-    <span v-for="(item, index) in this.$store.state.announcements" :key="index">
-      <fieldset>
-        <span class="small">Datum:</span>
-        <input :id="index + 'date'" type="date" class="wide" />
-        <br />
-        <span class="small">Uhrzeit:</span>
-        <input :id="index + 'time'" type="time" class="wide" />
-        <br />
-        <span class="small">Titel:</span>
-        <input :id="index + 'title'" type="text" class="wide" />
-        <br />
-        <span class="small">Nachricht:</span>
-        <input :id="index + 'content'" type="text" class="wide" />
-        <br />
-        <span class="small">Ersteller:</span>
-        <input :id="index + 'creator'" type="text" class="wide" />
-        <br />
-        <span class="small">Announcement:</span>
-        <input :id="index + 'announcement'" type="checkbox">
-        <button @click="makeAction('Delete', index)" class="spaceLeftRight">
-          Delete
-        </button>
-        <br />
-      </fieldset>
-    </span>
+    <h1>Announcements bearbeiten</h1>
+    <select name="announcement" id="announcement">
+      <option
+        v-for="(item, index) in $store.state.announcements"
+        v-bind:key="index"
+        :value="index"
+      >
+        {{ item.date }} | {{ item.title }}
+      </option>
+    </select>
+    <button @click="makeAction('Reset')">Bearbeiten</button>
+    <hr />
+    <fieldset>
+      <span class="small">Datum:</span>
+      <input :id="'date'" type="date" class="wide" />
+      <br />
+      <span class="small">Uhrzeit:</span>
+      <input :id="'time'" type="time" class="wide" />
+      <br />
+      <span class="small">Titel:</span>
+      <input :id="'title'" type="text" class="wide" />
+      <br />
+      <span class="small">Nachricht:</span>
+      <input :id="'content'" type="text" class="wide" />
+      <br />
+      <span class="small">Ersteller:</span>
+      <input :id="'creator'" type="text" class="wide" />
+      <br />
+      <span class="small">Anpinnen:</span>
+      <input :id="'pinned'" type="checkbox" />
+      <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
+        Delete
+      </button-->
+      <br />
+    </fieldset>
 
     <span>
       <br />
@@ -53,55 +62,44 @@ export default {
       if (name == "+") {
         console.log(name);
         this.makeAction("Save");
-        let announcement = {
+        let data = {
           date: "",
           time: "",
           content: "",
           creator: "",
           title: "",
-          announcement: "",
+          pinned: "",
         };
-        this.$store.state.announcements.push(announcement);
+        this.$store.state.announcements.push(data);
       } else if (name == "-") {
         console.log(name);
         this.$store.state.announcements.pop();
       } else if (name == "Save") {
         console.log(name);
-        let data = [];
-        for (
-          let index = 0;
-          index < this.$store.state.announcements.length;
-          index++
-        ) {
-          let std = {
-            date: document.getElementById(index + "date").value,
-            time: document.getElementById(index + "time").value,
-            content: document.getElementById(index + "content").value,
-            creator: document.getElementById(index + "creator").value,
-            title: document.getElementById(index + "title").value,
-            announcement: document.getElementById(index + "announcement").checked,
-          };
-          data.push(std);
-        }
+        const index = document.getElementById("announcement").value;
+        let announcement = {
+          date: document.getElementById("date").value,
+          time: document.getElementById("time").value,
+          content: document.getElementById("content").value,
+          creator: document.getElementById("creator").value,
+          title: document.getElementById("title").value,
+          pinned: document.getElementById("pinned").checked,
+        };
         this.$store.commit("importAnnouncements", {
-          data: data,
+          data: announcement,
+          index: index,
         });
         console.log(data);
       } else if (name == "Reset") {
         console.log(name);
-        let data = this.$store.state.announcements;
-        for (let index = 0; index < data.length; index++) {
-          document.getElementById(index + "date").value = data[index].date;
-          document.getElementById(index + "time").value = data[index].time;
-          document.getElementById(index + "content").value =
-            data[index].content;
-          document.getElementById(index + "creator").value =
-            data[index].creator;
-          document.getElementById(index + "title").value =
-            data[index].title;
-          document.getElementById(index + "announcement").checked =
-            data[index].announcement;
-        }
+        const index = document.getElementById("announcement").value;
+        let data = this.$store.state.announcements[index];
+        document.getElementById("date").value = data.date;
+        document.getElementById("time").value = data.time;
+        document.getElementById("content").value = data.content;
+        document.getElementById("creator").value = data.creator;
+        document.getElementById("title").value = data.title;
+        document.getElementById("pinned").checked = data.pinned;
       } else if (name == "Show") {
         console.log(name);
         let data = this.$store.state.announcements;
@@ -138,6 +136,7 @@ export default {
 
 <style scoped>
 #AddAnnouncementsPopup {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   display: block;
   text-align: center;
   margin: 5px;

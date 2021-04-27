@@ -1,30 +1,41 @@
 <template>
   <div id="AddPersonsPopup">
-    <h1>Create new Person</h1>
-    <span v-for="(item, index) in this.$store.state.persons" :key="index">
-      <fieldset style="text-align: left">
-        <span class="small">Name, Titel:</span>
-        <input :id="index + 'name'" type="text" class="name" />
-        ,
-        <input :id="index + 'titel'" type="text" class="titel" />
-        <br />
-        <span class="small">E-Mail:</span>
-        <input :id="index + 'email'" type="mail" class="wide" />
-        <br />
-        <span class="small">Homepage:</span>
-        <input :id="index + 'homepage'" type="url" class="wide" />
-        <br />
-        <span class="small">Tel.:</span>
-        <input :id="index + 'telefon'" type="tel" class="wide" />
-        <br />
-        <span class="small">Büroraum:</span>
-        <input :id="index + 'room'" type="text" class="wide" />
-        <br />
-        <span class="small">Sprechzeiten:</span>
-        <input :id="index + 'visitTime'" type="text" class="wide" />
-        <button @click="makeAction('Delete', index)" class="spaceLeftRight">Delete</button>
-      </fieldset>
-    </span>
+    <h1>Personen bearbeiten</h1>
+    <select name="person" id="person">
+      <option
+        v-for="(item, index) in $store.state.persons"
+        v-bind:key="index"
+        :value="index"
+      >
+        {{ item.name }}, {{ item.titel }}
+      </option>
+    </select>
+    <button @click="makeAction('Reset')">Bearbeiten</button>
+    <hr />
+    <fieldset style="text-align: left">
+      <span class="small">Name, Titel:</span>
+      <input :id="'name'" type="text" class="name" />
+      ,
+      <input :id="'titel'" type="text" class="titel" />
+      <br />
+      <span class="small">E-Mail:</span>
+      <input :id="'email'" type="mail" class="wide" />
+      <br />
+      <span class="small">Homepage:</span>
+      <input :id="'homepage'" type="url" class="wide" />
+      <br />
+      <span class="small">Tel.:</span>
+      <input :id="'telefon'" type="tel" class="wide" />
+      <br />
+      <span class="small">Büroraum:</span>
+      <input :id="'room'" type="text" class="wide" />
+      <br />
+      <span class="small">Sprechzeiten:</span>
+      <input :id="'visitTime'" type="text" class="wide" />
+      <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
+        Delete
+      </button-->
+    </fieldset>
 
     <span>
       <br />
@@ -64,34 +75,33 @@ export default {
         this.$store.state.persons.pop();
       } else if (name == "Save") {
         console.log(name);
-        let data = [];
-        for (let index = 0; index < this.$store.state.persons.length; index++) {
-          let person = {
-            name: document.getElementById(index + "name").value,
-            titel: document.getElementById(index + "titel").value,
-            email: document.getElementById(index + "email").value,
-            homepage: document.getElementById(index + "homepage").value,
-            telefon: document.getElementById(index + "telefon").value,
-            room: document.getElementById(index + "room").value,
-            visitTime: document.getElementById(index + "visitTime").value,
-          };
-          data.push(person);
-        }
+        const index = document.getElementById("person").value;
+        let person = {
+          name: document.getElementById("name").value,
+          titel: document.getElementById("titel").value,
+          email: document.getElementById("email").value,
+          homepage: document.getElementById("homepage").value,
+          telefon: document.getElementById("telefon").value,
+          room: document.getElementById("room").value,
+          visitTime: document.getElementById("visitTime").value,
+        };
         this.$store.commit("importPersons", {
-          data: data,
+          data: person,
+          index: index,
         });
-        console.log(data);
+        console.log(person);
       } else if (name == "Reset") {
         console.log(name);
         for (let index = 0; index < this.$store.state.persons.length; index++) {
+          const index = document.getElementById("person").value;
           let data = this.$store.state.persons[index];
-          document.getElementById(index + "name").value = data.name;
-          document.getElementById(index + "titel").value = data.titel;
-          document.getElementById(index + "email").value = data.email;
-          document.getElementById(index + "homepage").value = data.homepage;
-          document.getElementById(index + "telefon").value = data.telefon;
-          document.getElementById(index + "room").value = data.room;
-          document.getElementById(index + "visitTime").value = data.visitTime;
+          document.getElementById("name").value = data.name;
+          document.getElementById("titel").value = data.titel;
+          document.getElementById("email").value = data.email;
+          document.getElementById("homepage").value = data.homepage;
+          document.getElementById("telefon").value = data.telefon;
+          document.getElementById("room").value = data.room;
+          document.getElementById("visitTime").value = data.visitTime;
         }
       } else if (name == "Show") {
         console.log(name);
@@ -128,6 +138,7 @@ export default {
 
 <style scoped>
 #AddPersonsPopup {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   display: block;
   text-align: center;
   margin: 5px;

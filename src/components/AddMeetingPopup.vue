@@ -1,74 +1,76 @@
 <template>
   <div id="AddMeetingPopup">
-    <h1>Create new Meeting</h1>
-    <span v-for="(item, index) in this.$store.state.meetings" :key="index">
-      <fieldset style="text-align: left">
-        Name:
-        <input
-          :id="index + 'name'"
-          type="text"
-          style="width: calc(70% - 8px)"
-        />
-        <button @click="makeAction('Delete', index)" class="spaceLeftRight">
-          Delete
-        </button>
-        <br />
-        Veranst.Num.:
-        <input
-          :id="index + 'num'"
-          type="number"
-          style="width: calc(20% - 8px)"
-        />
-        Kurz.Beschr.:
-        <input
-          :id="index + 'name_short'"
-          type="text"
-          style="width: calc(10% - 8px)"
-        />
-        <br />
-        Datum:
-        <input :id="index + 'dateStart'" type="date" class="date" />
-        <input :id="index + 'repeatedly'" type="number" class="repeatedly" />
-        wl., bis
-        <input :id="index + 'dateEnd'" type="date" />
-        <input
-          :id="index + 'infinity'"
-          type="checkbox"
-          @click="inputDisabler(index, ['infinity'], ['dateEnd'])"
-        />
-        Dauerhaft
-        <br />
-        Zeit:
-        <select name="tStart" :id="index + 'tStart'">
-          <option
-            v-for="(it, ind) in $store.state.timings"
-            v-bind:key="ind"
-            :value="ind + 1"
-          >
-            {{ ind + 1 }}.Std. {{ it.tStart }}
-          </option>
-        </select>
-        -
-        <select name="tEnd" :id="index + 'tEnd'">
-          <option
-            v-for="(it, ind) in $store.state.timings"
-            v-bind:key="ind"
-            :value="ind + 1"
-          >
-            {{ ind + 1 }}.Std. {{ it.tEnd }}
-          </option>
-        </select>
-        <br />
-        Studiengänge:
-        <input :id="index + 'studigang'" type="text" />
-
-        Semester:
-        <input :id="index + 'semester'" type="text" />
-        <br />
-        DozentIn:
-        <input :id="index + 'dozent'" type="text" />
-      </fieldset>
-    </span>
+    <h1>Veranstaltungen bearbeiten</h1>
+    <select name="meeting" id="meeting">
+      <option
+        v-for="(item, index) in $store.state.meetings"
+        v-bind:key="index"
+        :value="index"
+      >
+        {{ item.num }} | {{ item.name_short }}
+      </option>
+    </select>
+    <button @click="makeAction('Reset')">Bearbeiten</button>
+    <hr />
+    <fieldset style="text-align: left">
+      <span class="small">Nummer:</span>
+      <input id="num" type="number" style="width: 60px" />
+      <span class="small" style="padding-left: 10px">Kurz.Beschr.:</span>
+      <input id="name_short" type="text" style="width: 122px" />
+      <br />
+      <span class="small">Name:</span>
+      <input id="name" type="text" class="wide" />
+      <br />
+      <span class="small">DozentIn:</span>
+      <input id="dozent" type="text" class="wide" />
+      <br />
+      <span class="small">Studiengänge:</span>
+      <input id="studigang" type="text" class="wide" />
+      <br />
+      <span class="small">Semester:</span>
+      <input id="semester" type="text" class="wide" />
+      <br />
+      <span class="small">Wdhl.:</span>
+      <span class="spaceLeftRight" style="margin-left: 0">Alle</span>
+      <input id="repeatedly" type="number" style="width: 60px" />
+      <span style="padding: 0 10px">Woche(n), oder</span>
+      <input
+        id="infinity"
+        type="checkbox"
+        @click="inputDisabler(['infinity'], ['dateEnd', 'repeatedly'])"
+      />
+      Dauerhaft
+      <br />
+      <span class="small">Datum von:</span>
+      <input id="dateStart" type="date" class="date" />
+      <br />
+      <span class="small">Datum bis:</span>
+      <input id="dateEnd" type="date" />
+      <br />
+      <span class="small">Zeit:</span>
+      <select name="tStart" id="tStart">
+        <option
+          v-for="(it, ind) in $store.state.timings"
+          v-bind:key="ind"
+          :value="ind + 1"
+        >
+          {{ ind + 1 }}.Std. {{ it.tStart }}
+        </option>
+      </select>
+      -
+      <select name="tEnd" id="tEnd">
+        <option
+          v-for="(it, ind) in $store.state.timings"
+          v-bind:key="ind"
+          :value="ind + 1"
+        >
+          {{ ind + 1 }}.Std. {{ it.tEnd }}
+        </option>
+      </select>
+      <br />
+      <span class="small">Veranstaltung</span>
+      <!--button @click="makeAction('Delete')">Löschen</button-->
+    </fieldset>
 
     <span>
       <br />
@@ -84,27 +86,30 @@
 
 <script>
 export default {
+  components: {},
   data() {
-    return {};
+    return {
+      selectedMeeting: "",
+    };
   },
   methods: {
-    inputDisabler(index, idSource, idDestinationDisable, idDestinationEnable) {
+    inputDisabler(idSource, idDestinationDisable, idDestinationEnable) {
       if (typeof idDestinationDisable != "undefined") {
         idDestinationDisable.forEach((element) => {
-          document.getElementById(
-            index + element
-          ).disabled = document.getElementById(index + idSource).checked;
+          document.getElementById(element).disabled = document.getElementById(
+            idSource
+          ).checked;
         });
       }
       if (typeof idDestinationEnable != "undefined") {
         idDestinationEnable.forEach((element) => {
-          document.getElementById(
-            index + element
-          ).disabled = !document.getElementById(index + idSource).checked;
+          document.getElementById(element).disabled = !document.getElementById(
+            idSource
+          ).checked;
         });
       }
     },
-    makeAction(name, ind) {
+    makeAction(name) {
       if (name == "+") {
         console.log(name);
         this.makeAction("Save");
@@ -127,46 +132,39 @@ export default {
           dozent: "",
         };
         this.$store.state.meetings.push(data);
+        this.makeAction('Reset');
       } else if (name == "-") {
         console.log(name);
         this.$store.state.meetings.pop();
       } else if (name == "Save") {
         console.log(name);
-        let data = [];
-        for (
-          let index = 0;
-          index < this.$store.state.meetings.length;
-          index++
-        ) {
-          let meeting = {
-            id: index,
-            num: document.getElementById(index + "num").value,
-            name: document.getElementById(index + "name").value,
-            name_short: document.getElementById(index + "name_short").value,
-            std_start: Number(document.getElementById(index + "tStart").value),
-            duration: Number(
-              document.getElementById(index + "tEnd").value -
-                document.getElementById(index + "tStart").value +
-                1
-            ),
-            date: {
-              start: document.getElementById(index + "dateStart").value,
-              repeatedly: Number(
-                document.getElementById(index + "repeatedly").value
-              ),
-              end: document.getElementById(index + "dateEnd").value,
-              infinity: document.getElementById(index + "infinity").checked,
-            },
-            semester: document.getElementById(index + "semester").value,
-            studigang: document.getElementById(index + "studigang").value,
-            dozent: document.getElementById(index + "dozent").value,
-          };
-          data.push(meeting);
-        }
+        const index = document.getElementById('meeting').value;
+        let meeting = {
+          num: document.getElementById("num").value,
+          name: document.getElementById("name").value,
+          name_short: document.getElementById("name_short").value,
+          std_start: Number(document.getElementById("tStart").value),
+          duration: Number(
+            document.getElementById("tEnd").value -
+              document.getElementById("tStart").value +
+              1
+          ),
+          date: {
+            start: document.getElementById("dateStart").value,
+            repeatedly: Number(document.getElementById("repeatedly").value),
+            end: document.getElementById("dateEnd").value,
+            infinity: document.getElementById("infinity").checked,
+          },
+          semester: document.getElementById("semester").value,
+          studigang: document.getElementById("studigang").value,
+          dozent: document.getElementById("dozent").value,
+        };
+
         this.$store.commit("importMeetings", {
-          data: data,
+          data: meeting,
+          index: index,
         });
-        console.log(data);
+        console.log(meeting);
       } else if (name == "Reset") {
         console.log(name);
         for (
@@ -174,27 +172,27 @@ export default {
           index < this.$store.state.meetings.length;
           index++
         ) {
+          const index = document.getElementById("meeting").value;
           let data = this.$store.state.meetings[index];
-          document.getElementById(index + "num").value = data.num;
-          document.getElementById(index + "name").value = data.name;
-          document.getElementById(index + "name_short").value = data.name_short;
-          document.getElementById(index + "dateStart").value = data.date.start;
-          document.getElementById(index + "dateEnd").value = data.date.end;
-          document.getElementById(index + "repeatedly").value =
-            data.date.repeatedly;
-          document.getElementById(index + "infinity").checked =
-            data.date.infinity;
-          document.getElementById(index + "infinity").value = data.std_start;
-          document.getElementById(index + "tEnd").value =
+          document.getElementById("num").value = data.num;
+          document.getElementById("name").value = data.name;
+          document.getElementById("name_short").value = data.name_short;
+          document.getElementById("dateStart").value = data.date.start;
+          document.getElementById("dateEnd").value = data.date.end;
+          document.getElementById("repeatedly").value = data.date.repeatedly;
+          document.getElementById("infinity").checked = data.date.infinity;
+          document.getElementById("tStart").value = data.std_start;
+          document.getElementById("tEnd").value =
             data.std_start + data.duration - 1;
-          document.getElementById(index + "semester").value = data.semester;
-          document.getElementById(index + "studigang").value = data.studigang;
-          document.getElementById(index + "dozent").value = data.dozent;
+          document.getElementById("semester").value = data.semester;
+          document.getElementById("studigang").value = data.studigang;
+          document.getElementById("dozent").value = data.dozent;
           if (data.date.infinity) {
-            document.getElementById(index + "dateEnd").disabled = true;
-            document.getElementById(index + "dateEnd").background = true;
+            document.getElementById("dateEnd").disabled = true;
+            document.getElementById("repeatedly").disabled = true;
           } else {
-            document.getElementById(index + "dateEnd").disabled = false;
+            document.getElementById("dateEnd").disabled = false;
+            document.getElementById("repeatedly").disabled = false;
           }
         }
       } else if (name == "Show") {
@@ -202,10 +200,11 @@ export default {
         let data = this.$store.state.meetings;
         console.log(data);
       } else if (name == "Delete") {
+        const index = document.getElementById('meeting').value;
         console.log(name);
-        console.log("Ind: " + ind);
+        console.log("Ind: " + index);
         let data = this.$store.state.meetings;
-        for (let n = ind; n < data.length - 1; n++) {
+        for (let n = index; n < data.length - 1; n++) {
           console.log("N: " + n);
           this.moveInArray(n + 1, n, data);
         }
@@ -232,6 +231,7 @@ export default {
 
 <style scoped>
 #AddMeetingPopup {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   display: block;
   text-align: center;
   margin: 5px;
@@ -239,9 +239,5 @@ export default {
 }
 .timing {
   width: 100px;
-}
-.repeatedly {
-  margin: 0 5px;
-  width: 40px;
 }
 </style>

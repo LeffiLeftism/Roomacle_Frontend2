@@ -17,13 +17,13 @@ export default new Vuex.Store({
             state.timings = payload.data;
         },
         importMeetings(state, payload) {
-            state.meetings = payload.data;
+            state.meetings[payload.index] = payload.data;
         },
         importPersons(state, payload) {
-            state.persons = payload.data;
+            state.persons[payload.index] = payload.data;
         },
         importAnnouncements(state, payload) {
-            state.announcements = payload.data;
+            state.announcements[payload.index] = payload.data;
         },
         importSetup(state, payload) {
             state.setup = payload.data;
