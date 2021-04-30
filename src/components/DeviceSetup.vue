@@ -50,6 +50,10 @@
         <label for="seats" class="spaceLeftRight">Sitze:</label>
         <input type="text" name="seats" id="seats" />
       </span>
+      <span>
+        <label for="desc">Beschreibung: </label>
+        <input id="desc" name="desc" type="text" class="wide"/>
+      </span>
     </fieldset>
     <fieldset style="display: flex" class="horizontal">
       <legend>Raumeigenschaften</legend>
@@ -98,6 +102,7 @@ export default {
       document.getElementById("fachbereich").value = data.fachbereich;
       document.getElementById("studienbereich").value = data.studienbereich;
       document.getElementById("seats").value = data.room.seats;
+      document.getElementById("desc").value = data.room.desc;
 
       if (data.room.type == "buero") {
         document.getElementById("buero").checked = true;

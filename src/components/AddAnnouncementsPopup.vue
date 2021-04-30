@@ -28,8 +28,19 @@
       <span class="small">Ersteller:</span>
       <input :id="'creator'" type="text" class="wide" />
       <br />
+      <span class="small">Timer:</span>
+      <input :id="'timerDateTime'" type="datetime-local" class="wide" />
+      <br />
+      <span class="small">TimerActive:</span>
+      <input
+        :id="'timerActive'"
+        type="checkbox"
+        class="wide"
+        @click="inputDisabler('timerActive', [], ['timerDateTime'])"
+      />
+      <br />
       <span class="small">Anpinnen:</span>
-      <input :id="'pinned'" type="checkbox" />
+      <input :id="'pinned'" type="checkbox" class="wide" />
       <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
         Delete
       </button-->
@@ -58,6 +69,22 @@ export default {
     };
   },
   methods: {
+    inputDisabler(idSource, idDestinationDisable, idDestinationEnable) {
+      if (typeof idDestinationDisable != "undefined") {
+        idDestinationDisable.forEach((element) => {
+          document.getElementById(element).disabled = document.getElementById(
+            idSource
+          ).checked;
+        });
+      }
+      if (typeof idDestinationEnable != "undefined") {
+        idDestinationEnable.forEach((element) => {
+          document.getElementById(element).disabled = !document.getElementById(
+            idSource
+          ).checked;
+        });
+      }
+    },
     makeAction(name, ind) {
       if (name == "+") {
         console.log(name);
@@ -69,6 +96,7 @@ export default {
           creator: "",
           title: "",
           pinned: "",
+          countDownDate: "",
         };
         this.$store.state.announcements.push(data);
       } else if (name == "-") {
@@ -77,6 +105,7 @@ export default {
       } else if (name == "Save") {
         console.log(name);
         const index = document.getElementById("announcement").value;
+
         let announcement = {
           date: document.getElementById("date").value,
           time: document.getElementById("time").value,
@@ -84,12 +113,14 @@ export default {
           creator: document.getElementById("creator").value,
           title: document.getElementById("title").value,
           pinned: document.getElementById("pinned").checked,
+          timerActive: document.getElementById("timerActive").checked,
+          countDownDate: document.getElementById("timerDateTime").value,
         };
         this.$store.commit("importAnnouncements", {
           data: announcement,
           index: index,
         });
-        console.log(data);
+        console.log(announcement);
       } else if (name == "Reset") {
         console.log(name);
         const index = document.getElementById("announcement").value;
@@ -100,6 +131,13 @@ export default {
         document.getElementById("creator").value = data.creator;
         document.getElementById("title").value = data.title;
         document.getElementById("pinned").checked = data.pinned;
+        document.getElementById("timerActive").checked = data.timerActive;
+        if (data.timerActive) {
+          document.getElementById("timerDateTime").value = data.countDownDate;
+        } else {
+          document.getElementById("timerDateTime").value = "";
+          document.getElementById("timerDateTime").disabled = true;
+        }
       } else if (name == "Show") {
         console.log(name);
         let data = this.$store.state.announcements;

@@ -46,6 +46,7 @@ export default {
           num: document.getElementById("raumnummer").value,
           type: roomtype,
           seats: document.getElementById("seats").value,
+          desc: document.getElementById("desc").value,
         },
         fachbereich: document.getElementById("fachbereich").value,
         studienbereich: document.getElementById("studienbereich").value,

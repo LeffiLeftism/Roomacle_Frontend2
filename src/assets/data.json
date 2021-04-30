@@ -80,9 +80,9 @@
         {
             "name": "Vielzulangername",
             "titel": "Oscar, Bambi",
-            "email": "langelangelangelangelange@e-mail.adresse.de",
+            "email": "langelangelangelange@e-mail.adresse.de",
             "homepage": "https://vielvielvielvielzuvieltextzeichen.net",
-            "telefon": "123456789123456789123456789000123456789",
+            "telefon": "123456789123456",
             "room": "GB-Filme",
             "visitTime": "Gestern"
         }
@@ -91,14 +91,14 @@
         {
             "id": 0,
             "num": "3344",
-            "name": "Aufbaukurs C++",
+            "name": "Aufbaukurs C++ ALLA",
             "name_short": "iAufC",
             "std_start": 1,
             "duration": 2,
             "date": {
-                "start": "2021-03-15",
-                "repeatedly": 1,
-                "end": "",
+                "start": "2021-04-30",
+                "repeatedly": 0,
+                "end": "2021-05-01",
                 "infinity": true
             },
             "semester": "3+4",
@@ -249,7 +249,9 @@
             "content": "Hier steht irdengwann mal Text!!!",
             "creator": "Alex",
             "title": "USB-Stick 32GB",
-            "pinned": true
+            "pinned": true,
+            "countDownDate": "2021-04-30T17:33",
+            "timerActive": true
         },
         {
             "date": "2021-04-19",
@@ -257,7 +259,9 @@
             "content": "Auch hier kann Text stehen",
             "creator": "Visar",
             "title": "Test Titel",
-            "pinned": true
+            "pinned": true,
+            "countDownDate": "2021-04-30T17:34",
+            "timerActive": true
         },
         {
             "date": "2021-05-01",
@@ -265,7 +269,9 @@
             "content": "Lost1",
             "creator": "Alex",
             "title": "Test Alex Titel",
-            "pinned": false
+            "pinned": false,
+            "countDownDate": "",
+            "timerActive": false
         },
         {
             "date": "2021-05-02",
@@ -273,14 +279,17 @@
             "content": "Lost2",
             "creator": "Visar",
             "title": "Titel Test",
-            "pinned": false
+            "pinned": false,
+            "countDownDate": "",
+            "timerActive": false
         }
     ],
     "setup": {
         "room": {
             "num": "A-317",
-            "type": "vl",
-            "seats": "30"
+            "type": "buero",
+            "seats": "30",
+            "desc" : "Sekretariat"
         },
         "fachbereich": "Ing. Wissenschaften",
         "studienbereich": "Angewandte Physik und Medizintechnik"
