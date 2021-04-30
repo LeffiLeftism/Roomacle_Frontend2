@@ -28,6 +28,14 @@
       <span class="small">Ersteller:</span>
       <input :id="'creator'" type="text" class="wide" />
       <br />
+      <span class="small">Anpinnen:</span>
+      <input
+        :id="'pinned'"
+        type="checkbox"
+        class="wide"
+        @click="inputDisabler('pinned', ['timerDateTime', 'timerActive'], [])"
+      />
+      <br />
       <span class="small">Timer:</span>
       <input :id="'timerDateTime'" type="datetime-local" class="wide" />
       <br />
@@ -38,9 +46,6 @@
         class="wide"
         @click="inputDisabler('timerActive', [], ['timerDateTime'])"
       />
-      <br />
-      <span class="small">Anpinnen:</span>
-      <input :id="'pinned'" type="checkbox" class="wide" />
       <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
         Delete
       </button-->
@@ -132,11 +137,20 @@ export default {
         document.getElementById("title").value = data.title;
         document.getElementById("pinned").checked = data.pinned;
         document.getElementById("timerActive").checked = data.timerActive;
-        if (data.timerActive) {
-          document.getElementById("timerDateTime").value = data.countDownDate;
+        if (data.pinned) {
+          document.getElementById("timerDateTime").disabled = false;
+          document.getElementById("timerActive").disabled = false;
+          if (data.timerActive) {
+            document.getElementById("timerDateTime").value = data.countDownDate;
+          } else {
+            document.getElementById("timerDateTime").value = "";
+            document.getElementById("timerDateTime").disabled = true;
+          }
         } else {
           document.getElementById("timerDateTime").value = "";
+          document.getElementById("timerActive").checked = false;
           document.getElementById("timerDateTime").disabled = true;
+          document.getElementById("timerActive").disabled = true;
         }
       } else if (name == "Show") {
         console.log(name);
