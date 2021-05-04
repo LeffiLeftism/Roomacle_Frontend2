@@ -226,8 +226,8 @@ h3 {
   color: #2c3e50;
 }
 .dot {
-  height: 25px;
-  width: 25px;
+  height: 15px;
+  width: 15px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;

@@ -32,6 +32,11 @@
       <br />
       <span class="small">Sprechzeiten:</span>
       <input :id="'visitTime'" type="text" class="wide" />
+      <br />
+      <span class="small">Terminkalender:</span>
+      <button class="wide" style="margin: 0 4px" @click="openModal()">
+        Termine bearbeiten
+      </button>
       <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
         Delete
       </button-->
@@ -51,11 +56,31 @@
 
 
 <script>
+import AddMeetingPopup from "../components/AddMeetingPopup.vue";
+
 export default {
   data() {
     return {};
   },
   methods: {
+    openModal() {
+      try {
+        this.$modal.show(
+          AddMeetingPopup,
+          {
+            meetings: this.$store.state.persons[
+              document.getElementById("person").value
+            ].meetings,
+            type: "persons",
+            person_index: Number(document.getElementById("person").value),
+          },
+          { height: "auto" }
+        );
+      } catch (err) {
+        console.log("Error on AddMeetingPopup.");
+        console.log(err);
+      }
+    },
     makeAction(name, ind) {
       if (name == "+") {
         console.log(name);
@@ -68,6 +93,7 @@ export default {
           telefon: "",
           room: "",
           visitTime: "",
+          meetings: [],
         };
         this.$store.state.persons.push(data);
       } else if (name == "-") {

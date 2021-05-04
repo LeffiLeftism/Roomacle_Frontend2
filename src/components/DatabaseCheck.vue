@@ -33,7 +33,7 @@
           <input id="personsImport" type="checkbox" />
         </span>
       </div>
-        <hr />
+      <hr />
       <div class="horizontal">
         <!-- -->
         <span class="horizontal">
@@ -42,7 +42,9 @@
             :class="[this.countAnnouncements > 0 ? 'green' : 'red']"
           ></span>
           <h2 class="spaceLeftRight">Announcements</h2>
-          <button id="announcementsAdd" @click="openModal('announcements')">+</button>
+          <button id="announcementsAdd" @click="openModal('announcements')">
+            +
+          </button>
           <input id="announcementsImport" type="checkbox" />
         </span>
         <!-- -->
@@ -86,7 +88,11 @@ export default {
         }
       } else if (name == "meetings") {
         try {
-          this.$modal.show(AddMeetingPopup, {}, { height: "auto" });
+          this.$modal.show(
+            AddMeetingPopup,
+            { meetings: this.$store.state.meetings, type: "calendar" },
+            { height: "auto" }
+          );
         } catch (err) {
           console.log("Error on AddMeetingPopup.");
           console.log(err);

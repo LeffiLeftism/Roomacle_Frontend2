@@ -3,7 +3,7 @@
     <h1>Veranstaltungen bearbeiten</h1>
     <select name="meeting" id="meeting">
       <option
-        v-for="(item, index) in $store.state.meetings"
+        v-for="(item, index) in this.meetings"
         v-bind:key="index"
         :value="index"
       >
@@ -19,7 +19,7 @@
       <input id="name_short" type="text" style="width: 122px" />
       <br />
       <span class="small">Name:</span>
-      <input id="name" type="text" class="wide" />
+      <input id="meetings_name" type="text" class="wide" />
       <br />
       <span class="small">DozentIn:</span>
       <input id="dozent" type="text" class="wide" />
@@ -86,6 +86,11 @@
 
 <script>
 export default {
+  props: {
+    meetings: Array,
+    type: String,
+    person_index: Number,
+  },
   components: {},
   data() {
     return {
@@ -112,8 +117,11 @@ export default {
     makeAction(name) {
       if (name == "+") {
         console.log(name);
-        this.makeAction("Save");
-        let arrayLen = this.$store.state.meetings.length;
+        let length = this.meetings.length;
+        if (length != 0) {
+          this.makeAction("Save");
+        }
+        let arrayLen = this.meetings.length;
         let data = {
           id: arrayLen,
           num: "",
@@ -131,17 +139,29 @@ export default {
           studigang: "",
           dozent: "",
         };
-        this.$store.state.meetings.push(data);
-        this.makeAction('Reset');
+        console.log("Data");
+        console.log(data);
+
+        if (this.type == "calendar") {
+          this.$store.state.meetings.push(data);
+        } else if (this.type == "persons") {
+          this.$store.state.persons[this.person_index].meetings.push(data);
+        }
+        if (length != 0) {
+          this.makeAction("Reset");
+        }
       } else if (name == "-") {
         console.log(name);
-        this.$store.state.meetings.pop();
+        this.meetings.pop();
       } else if (name == "Save") {
         console.log(name);
-        const index = document.getElementById('meeting').value;
+        let index = document.getElementById("meeting").value;
+        if (!index) {
+          index = 0;
+        }
         let meeting = {
           num: document.getElementById("num").value,
-          name: document.getElementById("name").value,
+          name: document.getElementById("meetings_name").value,
           name_short: document.getElementById("name_short").value,
           std_start: Number(document.getElementById("tStart").value),
           duration: Number(
@@ -160,22 +180,34 @@ export default {
           dozent: document.getElementById("dozent").value,
         };
 
-        this.$store.commit("importMeetings", {
-          data: meeting,
-          index: index,
-        });
+        if (this.type == "calendar") {
+          this.$store.commit("importMeetings", {
+            data: meeting,
+            index: index,
+          });
+        } else if (this.type == "persons") {
+          console.log(meeting);
+          console.log(index);
+          console.log(this.person_index);
+          this.$store.commit("importMeetingsPerson", {
+            data: meeting,
+            index: index,
+            person_index: this.person_index,
+          });
+        }
         console.log(meeting);
       } else if (name == "Reset") {
         console.log(name);
-        for (
-          let index = 0;
-          index < this.$store.state.meetings.length;
-          index++
-        ) {
+        if (this.meetings.length == 0) {
+          this.makeAction("+");
+          console.log("Set value");
+          document.getElementById("meeting").value = 0;
+        } else {
           const index = document.getElementById("meeting").value;
-          let data = this.$store.state.meetings[index];
+          let data = this.meetings[index];
+          console.log(data);
           document.getElementById("num").value = data.num;
-          document.getElementById("name").value = data.name;
+          document.getElementById("meetings_name").value = data.name;
           document.getElementById("name_short").value = data.name_short;
           document.getElementById("dateStart").value = data.date.start;
           document.getElementById("dateEnd").value = data.date.end;
@@ -197,13 +229,13 @@ export default {
         }
       } else if (name == "Show") {
         console.log(name);
-        let data = this.$store.state.meetings;
+        let data = this.meetings;
         console.log(data);
       } else if (name == "Delete") {
-        const index = document.getElementById('meeting').value;
+        const index = document.getElementById("meeting").value;
         console.log(name);
         console.log("Ind: " + index);
-        let data = this.$store.state.meetings;
+        let data = this.meetings;
         for (let n = index; n < data.length - 1; n++) {
           console.log("N: " + n);
           this.moveInArray(n + 1, n, data);
@@ -221,9 +253,11 @@ export default {
     },
   },
   mounted() {
+    console.log("Mount");
     this.makeAction("Reset");
   },
   updated() {
+    console.log("Update");
     this.makeAction("Reset");
   },
 };

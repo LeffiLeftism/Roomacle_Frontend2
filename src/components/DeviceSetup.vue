@@ -24,8 +24,6 @@
             )
           "
         />
-      </span>
-      <span>
         <label class="spaceLeftRight" for="vl">Vorlesung/Seminar</label>
         <input
           type="radio"
@@ -47,12 +45,14 @@
             )
           "
         />
-        <label for="seats" class="spaceLeftRight">Sitze:</label>
-        <input type="text" name="seats" id="seats" />
       </span>
+      <br />
       <span>
-        <label for="desc">Beschreibung: </label>
-        <input id="desc" name="desc" type="text" class="wide"/>
+        <label for="desc" class="small">Beschreibung: </label>
+        <input id="desc" name="desc" type="text" class="wide" />
+        <br />
+        <label for="seats" class="small">Sitze: </label>
+        <input type="text" name="seats" id="seats" class="wide" />
       </span>
     </fieldset>
     <fieldset style="display: flex" class="horizontal">

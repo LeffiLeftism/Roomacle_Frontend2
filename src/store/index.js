@@ -19,6 +19,9 @@ export default new Vuex.Store({
         importMeetings(state, payload) {
             state.meetings[payload.index] = payload.data;
         },
+        importMeetingsPerson(state, payload) {
+            state.persons[payload.person_index].meetings[payload.index] = payload.data;
+        },
         importPersons(state, payload) {
             state.persons[payload.index] = payload.data;
         },
