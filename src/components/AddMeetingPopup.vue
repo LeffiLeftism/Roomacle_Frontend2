@@ -11,6 +11,7 @@
       </option>
     </select>
     <button @click="makeAction('Reset')">Bearbeiten</button>
+    <button @click="makeAction('Delete')">Löschen</button>
     <hr />
     <fieldset style="text-align: left">
       <span class="small">Nummer:</span>
@@ -67,9 +68,6 @@
           {{ ind + 1 }}.Std. {{ it.tEnd }}
         </option>
       </select>
-      <br />
-      <span class="small">Veranstaltung</span>
-      <!--button @click="makeAction('Delete')">Löschen</button-->
     </fieldset>
 
     <span>
@@ -232,13 +230,15 @@ export default {
         let data = this.meetings;
         console.log(data);
       } else if (name == "Delete") {
-        const index = document.getElementById("meeting").value;
         console.log(name);
+        this.makeAction("Reset");
+        const index = Number(document.getElementById("meeting").value);
         console.log("Ind: " + index);
         let data = this.meetings;
-        for (let n = index; n < data.length - 1; n++) {
-          console.log("N: " + n);
+        for (var n = index; n < data.length - 1; n++) {
+          //console.log("n: " + n);
           this.moveInArray(n + 1, n, data);
+          //console.log("--------------");
         }
         this.makeAction("-");
       } else {
@@ -249,7 +249,7 @@ export default {
       let spacer = array[pos1];
       array[pos1] = array[pos2];
       array[pos2] = spacer;
-      console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
+      //console.log("Moved " + pos1 + " to " + pos2 + " on Array " + array);
     },
   },
   mounted() {

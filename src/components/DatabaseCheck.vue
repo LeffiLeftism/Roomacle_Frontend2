@@ -106,7 +106,13 @@ export default {
         }
       } else if (name == "announcements") {
         try {
-          this.$modal.show(AddAnnouncementsPopup, {}, { height: "auto" });
+          this.$modal.show(
+            AddAnnouncementsPopup,
+            {
+              announcements: this.$store.state.announcements,
+            },
+            { height: "auto" }
+          );
         } catch (err) {
           console.log("Error on AddAnnouncementsPopup.");
           console.log(err);

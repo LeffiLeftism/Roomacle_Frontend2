@@ -3,7 +3,7 @@
     <h1>Announcements bearbeiten</h1>
     <select name="announcement" id="announcement">
       <option
-        v-for="(item, index) in $store.state.announcements"
+        v-for="(item, index) in this.announcements"
         v-bind:key="index"
         :value="index"
       >
@@ -11,6 +11,7 @@
       </option>
     </select>
     <button @click="makeAction('Reset')">Bearbeiten</button>
+    <button @click="makeAction('Delete')">Löschen</button>
     <hr />
     <fieldset>
       <span class="small">Datum:</span>
@@ -33,7 +34,7 @@
         :id="'pinned'"
         type="checkbox"
         class="wide"
-        @click="inputDisabler('pinned', ['timerDateTime', 'timerActive'], [])"
+        @click="inputDisabler('pinned', [], ['timerDateTime', 'timerActive'])"
       />
       <br />
       <span class="small">Timer:</span>
@@ -46,7 +47,7 @@
         class="wide"
         @click="inputDisabler('timerActive', [], ['timerDateTime'])"
       />
-      <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
+      <!--button @click="makeAction('Delete')" class="spaceLeftRight">
         Delete
       </button-->
       <br />
@@ -68,6 +69,9 @@
 import data from "../assets/data.json";
 
 export default {
+  props: {
+    announcements: Array,
+  },
   data() {
     return {
       data,
@@ -90,10 +94,13 @@ export default {
         });
       }
     },
-    makeAction(name, ind) {
+    makeAction(name) {
       if (name == "+") {
         console.log(name);
-        this.makeAction("Save");
+        let length = this.announcements.length;
+        if (length != 0) {
+          this.makeAction("Save");
+        }
         let data = {
           date: "",
           time: "",
@@ -106,7 +113,7 @@ export default {
         this.$store.state.announcements.push(data);
       } else if (name == "-") {
         console.log(name);
-        this.$store.state.announcements.pop();
+        this.announcements.pop();
       } else if (name == "Save") {
         console.log(name);
         const index = document.getElementById("announcement").value;
@@ -128,41 +135,51 @@ export default {
         console.log(announcement);
       } else if (name == "Reset") {
         console.log(name);
-        const index = document.getElementById("announcement").value;
-        let data = this.$store.state.announcements[index];
-        document.getElementById("date").value = data.date;
-        document.getElementById("time").value = data.time;
-        document.getElementById("content").value = data.content;
-        document.getElementById("creator").value = data.creator;
-        document.getElementById("title").value = data.title;
-        document.getElementById("pinned").checked = data.pinned;
-        document.getElementById("timerActive").checked = data.timerActive;
-        if (data.pinned) {
-          document.getElementById("timerDateTime").disabled = false;
-          document.getElementById("timerActive").disabled = false;
-          if (data.timerActive) {
-            document.getElementById("timerDateTime").value = data.countDownDate;
+        if (this.announcements.length == 0) {
+          this.makeAction("+");
+          console.log("Set value");
+          document.getElementById("announcement").value = 0;
+        } else {
+          const index = document.getElementById("announcement").value;
+          let data = this.announcements[index];
+          document.getElementById("date").value = data.date;
+          document.getElementById("time").value = data.time;
+          document.getElementById("content").value = data.content;
+          document.getElementById("creator").value = data.creator;
+          document.getElementById("title").value = data.title;
+          document.getElementById("pinned").checked = data.pinned;
+          document.getElementById("timerActive").checked = data.timerActive;
+          if (data.pinned) {
+            document.getElementById("timerDateTime").disabled = false;
+            document.getElementById("timerActive").disabled = false;
+            if (data.timerActive) {
+              document.getElementById("timerDateTime").value =
+                data.countDownDate;
+            } else {
+              document.getElementById("timerDateTime").value = "";
+              document.getElementById("timerDateTime").disabled = true;
+            }
           } else {
             document.getElementById("timerDateTime").value = "";
+            document.getElementById("timerActive").checked = false;
             document.getElementById("timerDateTime").disabled = true;
+            document.getElementById("timerActive").disabled = true;
           }
-        } else {
-          document.getElementById("timerDateTime").value = "";
-          document.getElementById("timerActive").checked = false;
-          document.getElementById("timerDateTime").disabled = true;
-          document.getElementById("timerActive").disabled = true;
         }
       } else if (name == "Show") {
         console.log(name);
-        let data = this.$store.state.announcements;
+        let data = this.announcements;
         console.log(data);
       } else if (name == "Delete") {
         console.log(name);
-        console.log("Ind: " + ind);
-        let data = this.$store.state.announcements;
-        for (let n = ind; n < data.length - 1; n++) {
-          console.log("N: " + n);
+        this.makeAction("Reset");
+        const index = Number(document.getElementById("announcement").value);
+        console.log("Ind: " + index);
+        let data = this.announcements;
+        for (var n = index; n < data.length - 1; n++) {
+          //console.log("n: " + n);
           this.moveInArray(n + 1, n, data);
+          //console.log("--------------");
         }
         this.makeAction("-");
       } else {
