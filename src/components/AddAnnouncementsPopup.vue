@@ -37,9 +37,6 @@
         @click="inputDisabler('pinned', [], ['timerDateTime', 'timerActive'])"
       />
       <br />
-      <span class="small">Timer:</span>
-      <input :id="'timerDateTime'" type="datetime-local" class="wide" />
-      <br />
       <span class="small">TimerActive:</span>
       <input
         :id="'timerActive'"
@@ -47,6 +44,9 @@
         class="wide"
         @click="inputDisabler('timerActive', [], ['timerDateTime'])"
       />
+      <br />
+      <span class="small">Timer:</span>
+      <input :id="'timerDateTime'" type="datetime-local" class="wide" />
       <!--button @click="makeAction('Delete')" class="spaceLeftRight">
         Delete
       </button-->
@@ -81,16 +81,14 @@ export default {
     inputDisabler(idSource, idDestinationDisable, idDestinationEnable) {
       if (typeof idDestinationDisable != "undefined") {
         idDestinationDisable.forEach((element) => {
-          document.getElementById(element).disabled = document.getElementById(
-            idSource
-          ).checked;
+          document.getElementById(element).disabled =
+            document.getElementById(idSource).checked;
         });
       }
       if (typeof idDestinationEnable != "undefined") {
         idDestinationEnable.forEach((element) => {
-          document.getElementById(element).disabled = !document.getElementById(
-            idSource
-          ).checked;
+          document.getElementById(element).disabled =
+            !document.getElementById(idSource).checked;
         });
       }
     },
@@ -125,7 +123,9 @@ export default {
           creator: document.getElementById("creator").value,
           title: document.getElementById("title").value,
           pinned: document.getElementById("pinned").checked,
-          timerActive: document.getElementById("timerActive").checked,
+          timerActive:
+            document.getElementById("timerActive").checked &&
+            document.getElementById("pinned").checked,
           countDownDate: document.getElementById("timerDateTime").value,
         };
         this.$store.commit("importAnnouncements", {
@@ -137,7 +137,6 @@ export default {
         console.log(name);
         if (this.announcements.length == 0) {
           this.makeAction("+");
-          console.log("Set value");
           document.getElementById("announcement").value = 0;
         } else {
           const index = document.getElementById("announcement").value;

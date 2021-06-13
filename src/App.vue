@@ -1,37 +1,101 @@
 <template>
   <div id="app">
     <h1>Roomacle Setup-Generator</h1>
-    <button @click="importData()" class="spaceLeftRight">IMPORT</button>
-    <button @click="showAll()" class="spaceLeftRight">SHOW ALL</button>
-    <button @click="sendData()" class="spaceLeftRight">SEND ALL DATA</button>
-    <button @click="recieveData()" class="spaceLeftRight">
-      RECIEVE ALL DATA
-    </button>
-    <hr />
-    <DeviceSetup />
+    <div v-if="this.$store.state.logged_in == false">
+      <Login />
+    </div>
+    <div v-show="this.$store.state.logged_in">
+      <div class="buttonrow">
+        <input id="fileupload" type="file" accept=".json" />
+        <span id="output"></span>
+        <button @click="uploadData()" class="spaceLeftRight" id="uploadButton">
+          Upload
+        </button>
+        <button @click="saveFile" class="spaceLeftRight" id="downloadButton">
+          Download
+        </button>
+        <!--button @click="importData()" class="spaceLeftRight">
+          Import Data
+        </button>
+        <button @click="showAll()" class="spaceLeftRight">SHOW ALL</button-->
+        <button @click="sendData()" class="spaceLeftRight">
+          SEND ALL DATA
+        </button>
+        <!--button @click="recieveData()" class="spaceLeftRight">
+          RECIEVE ALL DATA
+      </button-->
+        <Logout />
+      </div>
+      <hr />
+      <DeviceSetup />
+      <br />
+      <DatabaseCheck />
+    </div>
     <br />
-    <DatabaseCheck />
-    <br />
+    <input type="file" id="imgInput" /><br />
+    <img src="" height="200" alt="Image preview..." id="imageTest" />
+    <button @click="test()">Send Img</button>
+    <button @click="test2()">Get Img</button>
   </div>
 </template>
 
 <script>
 import DatabaseCheck from "./components/DatabaseCheck.vue";
 import DeviceSetup from "./components/DeviceSetup.vue";
+import Login from "./components/Login.vue";
+import Logout from "./components/Logout.vue";
 import data from "./assets/data.json";
+import { asyncData } from "./store/index.js";
+import { base64File } from "./store/index.js";
 
 export default {
   name: "App",
   components: {
     DatabaseCheck,
     DeviceSetup,
+    Login,
+    Logout,
   },
   data() {
     return {
       data,
+      content: "",
     };
   },
   methods: {
+    test: async function () {
+      console.log("Test");
+      const data = {};
+      data.base64Code = base64File.data;
+      console.log(data);
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      const response = await fetch("/testImg", options);
+      const json = await response.json();
+      console.log("Response:");
+      console.log(json);
+    },
+    test2: async function () {
+      const data = {};
+      data.data = "Img Request";
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      const response = await fetch("/readImg", options);
+      const json = await response.json();
+      console.log("Response:");
+      console.log(json);
+      document.getElementById("imageTest").src = json.base64Code;
+    },
     saveSetup() {
       let roomtype;
       let typeA = document.getElementById("buero").checked;
@@ -197,18 +261,70 @@ export default {
       } else if (this.$store.state.setup.room.type == "vl") {
         document.getElementById("vl").checked = true;
       }
-      document.getElementById(
-        "raumnummer"
-      ).value = this.$store.state.setup.room.num;
-      document.getElementById(
-        "fachbereich"
-      ).value = this.$store.state.setup.fachbereich;
-      document.getElementById(
-        "studienbereich"
-      ).value = this.$store.state.setup.studienbereich;
+      document.getElementById("raumnummer").value =
+        this.$store.state.setup.room.num;
+      document.getElementById("fachbereich").value =
+        this.$store.state.setup.fachbereich;
+      document.getElementById("studienbereich").value =
+        this.$store.state.setup.studienbereich;
+    },
+    async uploadData() {
+      document.getElementById("uploadButton").style.backgroundColor =
+        "lightgrey";
+      console.log(asyncData.database);
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(asyncData.database),
+      };
+      const response = await fetch("/send", options);
+      const json = await response.json();
+      console.log("Response:");
+      console.log(json);
+      this.recieveData();
     },
     showAll() {
       console.log(this.$store.state);
+    },
+    saveFile: function () {
+      const data = JSON.stringify(asyncData.database);
+      console.log(data);
+      window.localStorage.setItem("database", data);
+      console.log(JSON.parse(window.localStorage.getItem("database")));
+    },
+  },
+  mounted() {
+    document
+      .getElementById("fileupload")
+      .addEventListener("change", function () {
+        var fr = new FileReader();
+        fr.onload = function () {
+          asyncData.database = JSON.parse(fr.result);
+          document.getElementById("uploadButton").style.backgroundColor =
+            "green";
+        };
+
+        fr.readAsText(this.files[0]);
+      });
+
+    document.getElementById("imgInput").addEventListener("change", function () {
+      var fr = new FileReader();
+      fr.onload = function () {
+        base64File.data = fr.result;
+        console.log(base64File.data);
+      };
+
+      fr.readAsDataURL(this.files[0]);
+    });
+  },
+  watch: {
+    "$store.state.logged_in": {
+      handler: function () {
+        this.recieveData();
+      },
     },
   },
 };
@@ -217,6 +333,9 @@ export default {
 <style>
 h3 {
   margin: 5px 0;
+}
+button {
+  background-color: lightgrey;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -250,5 +369,10 @@ h3 {
 }
 .wide {
   width: 300px;
+}
+.buttonrow {
+  display: flex;
+  align-content: space-between;
+  justify-content: center;
 }
 </style>

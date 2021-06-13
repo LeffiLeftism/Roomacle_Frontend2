@@ -99,7 +99,13 @@ export default {
         }
       } else if (name == "persons") {
         try {
-          this.$modal.show(AddPersonsPopup, {}, { height: "auto" });
+          this.$modal.show(
+            AddPersonsPopup,
+            {
+              persons: this.$store.state.persons,
+            },
+            { height: "auto" }
+          );
         } catch (err) {
           console.log("Error on AddPersonsPopup.");
           console.log(err);

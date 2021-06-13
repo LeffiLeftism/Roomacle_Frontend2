@@ -1,7 +1,7 @@
 <template>
   <div id="AddPersonsPopup">
     <h1>Personen bearbeiten</h1>
-    <select name="person" id="person">
+    <select name="person" id="person" @change="makeAction('Reset')">
       <option
         v-for="(item, index) in $store.state.persons"
         v-bind:key="index"
@@ -10,7 +10,10 @@
         {{ item.name }}, {{ item.titel }}
       </option>
     </select>
-    <button @click="makeAction('Reset')">Bearbeiten</button>
+    <button @click="makeAction('Delete', index)" class="spaceLeftRight">
+      Löschen
+    </button>
+    <!--button @click="makeAction('Reset')">Bearbeiten</button-->
     <hr />
     <fieldset style="text-align: left">
       <span class="small">Name, Titel:</span>
@@ -37,9 +40,6 @@
       <button class="wide" style="margin: 0 4px" @click="openModal()">
         Termine bearbeiten
       </button>
-      <!--button @click="makeAction('Delete', index)" class="spaceLeftRight">
-        Delete
-      </button-->
     </fieldset>
 
     <span>
@@ -59,6 +59,9 @@
 import AddMeetingPopup from "../components/AddMeetingPopup.vue";
 
 export default {
+  props: {
+    persons: Array,
+  },
   data() {
     return {};
   },
@@ -68,9 +71,9 @@ export default {
         this.$modal.show(
           AddMeetingPopup,
           {
-            meetings: this.$store.state.persons[
-              document.getElementById("person").value
-            ].meetings,
+            meetings:
+              this.$store.state.persons[document.getElementById("person").value]
+                .meetings,
             type: "persons",
             person_index: Number(document.getElementById("person").value),
           },
@@ -81,10 +84,13 @@ export default {
         console.log(err);
       }
     },
-    makeAction(name, ind) {
+    makeAction(name) {
       if (name == "+") {
         console.log(name);
-        this.makeAction("Save");
+        let length = this.persons.length;
+        if (length != 0) {
+          this.makeAction("Save");
+        }
         let data = {
           name: "",
           titel: "",
@@ -98,7 +104,7 @@ export default {
         this.$store.state.persons.push(data);
       } else if (name == "-") {
         console.log(name);
-        this.$store.state.persons.pop();
+        this.persons.pop();
       } else if (name == "Save") {
         console.log(name);
         const index = document.getElementById("person").value;
@@ -118,7 +124,10 @@ export default {
         console.log(person);
       } else if (name == "Reset") {
         console.log(name);
-        for (let index = 0; index < this.$store.state.persons.length; index++) {
+        if (this.persons.length == 0) {
+          this.makeAction("+");
+          document.getElementById("person").value = 0;
+        } else {
           const index = document.getElementById("person").value;
           let data = this.$store.state.persons[index];
           document.getElementById("name").value = data.name;
@@ -129,17 +138,33 @@ export default {
           document.getElementById("room").value = data.room;
           document.getElementById("visitTime").value = data.visitTime;
         }
+
+        //OLD
+        /*for (let index = 0; index < this.$store.state.persons.length; index++) {
+          const index = document.getElementById("person").value;
+          let data = this.$store.state.persons[index];
+          document.getElementById("name").value = data.name;
+          document.getElementById("titel").value = data.titel;
+          document.getElementById("email").value = data.email;
+          document.getElementById("homepage").value = data.homepage;
+          document.getElementById("telefon").value = data.telefon;
+          document.getElementById("room").value = data.room;
+          document.getElementById("visitTime").value = data.visitTime;
+        }*/
       } else if (name == "Show") {
         console.log(name);
-        let data = this.$store.state.persons;
+        let data = this.persons;
         console.log(data);
       } else if (name == "Delete") {
         console.log(name);
-        console.log("Ind: " + ind);
-        let data = this.$store.state.persons;
-        for (let n = ind; n < data.length - 1; n++) {
-          console.log("N: " + n);
+        this.makeAction("Reset");
+        const index = Number(document.getElementById("person").value);
+        console.log("Ind: " + index);
+        let data = this.persons;
+        for (var n = index; n < data.length - 1; n++) {
+          //console.log("n: " + n);
           this.moveInArray(n + 1, n, data);
+          //console.log("--------------");
         }
         this.makeAction("-");
       } else {

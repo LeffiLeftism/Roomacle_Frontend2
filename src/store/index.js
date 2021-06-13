@@ -3,6 +3,14 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+export const asyncData = Vue.observable({
+    database: "This is empty"
+})
+
+export const base64File = Vue.observable({
+    data: "This is base64File"
+})
+
 export default new Vuex.Store({
     state: {
         timings: [],
@@ -10,6 +18,7 @@ export default new Vuex.Store({
         persons: [],
         announcements: [],
         setup: {},
+        logged_in: false,
     },
     getters: {},
     mutations: {
