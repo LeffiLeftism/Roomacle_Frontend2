@@ -14,6 +14,7 @@
 export default {
   methods: {
     logout() {
+      this.$parent.sendData();
       console.log("Logout");
       this.$store.state.logged_in = false;
     },

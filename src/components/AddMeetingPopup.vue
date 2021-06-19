@@ -1,6 +1,6 @@
 <template>
   <div id="AddMeetingPopup">
-    <h1>Veranstaltungen bearbeiten</h1>
+    <h3>Veranstaltungen bearbeiten</h3>
     <select name="meeting" id="meeting" @change="makeAction('Reset')">
       <option
         v-for="(item, index) in this.meetings"
@@ -18,7 +18,7 @@
     <fieldset style="text-align: left">
       <span class="small">Nummer:</span>
       <input id="num" type="number" style="width: 60px" />
-      <span class="small" style="padding-left: 10px">Kurz.Beschr.:</span>
+      <span class="small" style="padding-left: 10px">Abk. Name:</span>
       <input id="name_short" type="text" style="width: 102px" />
       <br />
       <span class="small">Name:</span>
@@ -80,9 +80,8 @@
 
     <span>
       <br />
-      <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <button class="btnAddDelete" @click="makeAction('-')">-</button>
+      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
       <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->

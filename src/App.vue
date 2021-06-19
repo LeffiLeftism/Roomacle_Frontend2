@@ -1,41 +1,62 @@
 <template>
   <div id="app">
-    <h1>Roomacle Setup-Generator</h1>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 10%;
+      "
+    >
+      <img
+        v-if="this.$store.state.logged_in"
+        style="margin-right: 20px"
+        :src="this.$store.state.setup.base64Code"
+        alt=""
+        id="logo"
+      />
+      <br />
+      <h2>Roomacle Dateneingabe</h2>
+    </div>
     <div v-if="this.$store.state.logged_in == false">
       <Login />
     </div>
     <div v-show="this.$store.state.logged_in">
       <div class="buttonrow">
-        <input id="fileupload" type="file" accept=".json" />
-        <span id="output"></span>
-        <button @click="uploadData()" class="spaceLeftRight" id="uploadButton">
-          Upload
-        </button>
-        <button @click="saveFile" class="spaceLeftRight" id="downloadButton">
-          Download
-        </button>
+        <div style="border: 2px solid black; padding: 2px">
+          <input id="fileupload" type="file" accept=".json" />
+          <span id="output"></span>
+          <button
+            @click="uploadData()"
+            class="spaceLeftRight"
+            id="uploadButton"
+          >
+            Upload
+          </button>
+          <button
+            @click="downloadData()"
+            class="spaceLeftRight"
+            id="downloadButton"
+          >
+            Download
+          </button>
+        </div>
         <!--button @click="importData()" class="spaceLeftRight">
           Import Data
-        </button>
-        <button @click="showAll()" class="spaceLeftRight">SHOW ALL</button-->
-        <button @click="sendData()" class="spaceLeftRight">
-          SEND ALL DATA
-        </button>
+        </button-->
+        <!--button @click="showAll()" class="spaceLeftRight">SHOW ALL</button>
+        <button @click="sendData()" class="spaceLeftRight">Send Data</button-->
         <!--button @click="recieveData()" class="spaceLeftRight">
           RECIEVE ALL DATA
       </button-->
-        <Logout />
+        <Logout class="spaceLeftRight" style="margin-top: 4px" />
       </div>
       <hr />
       <DeviceSetup />
       <br />
       <DatabaseCheck />
     </div>
-    <br />
-    <input type="file" id="imgInput" /><br />
-    <img src="" height="200" alt="Image preview..." id="imageTest" />
-    <button @click="test()">Send Img</button>
-    <button @click="test2()">Get Img</button>
   </div>
 </template>
 
@@ -46,7 +67,6 @@ import Login from "./components/Login.vue";
 import Logout from "./components/Logout.vue";
 import data from "./assets/data.json";
 import { asyncData } from "./store/index.js";
-import { base64File } from "./store/index.js";
 
 export default {
   name: "App",
@@ -63,38 +83,49 @@ export default {
     };
   },
   methods: {
-    test: async function () {
-      console.log("Test");
-      const data = {};
-      data.base64Code = base64File.data;
-      console.log(data);
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-      const response = await fetch("/testImg", options);
-      const json = await response.json();
-      console.log("Response:");
-      console.log(json);
+    async uploadData() {
+      document.getElementById("uploadButton").style.backgroundColor =
+        "lightgrey";
+      if (asyncData.database == "This is empty") {
+        console.log("Keine Datei ausgewählt.");
+      } else {
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(asyncData.database),
+        };
+        const response = await fetch("/send", options);
+        const json = await response.json();
+        console.log("Response:");
+        console.log(json);
+        this.recieveData();
+      }
     },
-    test2: async function () {
-      const data = {};
-      data.data = "Img Request";
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-      const response = await fetch("/readImg", options);
-      const json = await response.json();
-      console.log("Response:");
-      console.log(json);
-      document.getElementById("imageTest").src = json.base64Code;
+    downloadData() {
+      let store = this.$store.state;
+      let data = {};
+      data.timings = store.timings;
+      data.persons = store.persons;
+      data.meetings = store.meetings;
+      data.announcements = store.announcements;
+      data.setup = store.setup;
+      var filename = "test.json";
+      var text = JSON.stringify(data);
+      var element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+      );
+      element.setAttribute("download", filename);
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     },
     saveSetup() {
       let roomtype;
@@ -106,10 +137,10 @@ export default {
         roomtype = "vl";
       }
       let data = {
+        base64Code: document.getElementById("logo").src,
         room: {
           num: document.getElementById("raumnummer").value,
           type: roomtype,
-          seats: document.getElementById("seats").value,
           desc: document.getElementById("desc").value,
         },
         fachbereich: document.getElementById("fachbereich").value,
@@ -127,7 +158,8 @@ export default {
       data.persons = this.$store.state.persons;
       data.setup = this.$store.state.setup;
       data.announcements = this.$store.state.announcements;
-      //console.log(data);
+      console.log("Data send:");
+      console.log(data);
       const options = {
         method: "POST",
         headers: {
@@ -268,24 +300,6 @@ export default {
       document.getElementById("studienbereich").value =
         this.$store.state.setup.studienbereich;
     },
-    async uploadData() {
-      document.getElementById("uploadButton").style.backgroundColor =
-        "lightgrey";
-      console.log(asyncData.database);
-
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(asyncData.database),
-      };
-      const response = await fetch("/send", options);
-      const json = await response.json();
-      console.log("Response:");
-      console.log(json);
-      this.recieveData();
-    },
     showAll() {
       console.log(this.$store.state);
     },
@@ -309,16 +323,6 @@ export default {
 
         fr.readAsText(this.files[0]);
       });
-
-    document.getElementById("imgInput").addEventListener("change", function () {
-      var fr = new FileReader();
-      fr.onload = function () {
-        base64File.data = fr.result;
-        console.log(base64File.data);
-      };
-
-      fr.readAsDataURL(this.files[0]);
-    });
   },
   watch: {
     "$store.state.logged_in": {
@@ -343,6 +347,12 @@ button {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+#logo {
+  width: auto;
+  max-height: 70px;
+  max-width: 25%;
+  padding: 6px;
 }
 .dot {
   height: 15px;

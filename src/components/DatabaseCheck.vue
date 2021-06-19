@@ -1,17 +1,8 @@
 <template>
   <div>
     <fieldset>
+      <legend>Datenbank-Check</legend>
       <div class="horizontal">
-        <!-- -->
-        <span class="horizontal">
-          <span
-            class="dot"
-            :class="[this.countTimings > 0 ? 'green' : 'red']"
-          ></span>
-          <h2 class="spaceLeftRight">Zeiten</h2>
-          <button id="timingsAdd" @click="openModal('timings')">+</button>
-          <input id="timingsImport" type="checkbox" />
-        </span>
         <!-- -->
         <span class="horizontal">
           <span
@@ -20,7 +11,7 @@
           ></span>
           <h2 class="spaceLeftRight">Veranstaltungen</h2>
           <button id="meetingsAdd" @click="openModal('meetings')">+</button>
-          <input id="meetingsImport" type="checkbox" />
+          <!--input id="meetingsImport" type="checkbox" /-->
         </span>
         <!-- -->
         <span class="horizontal">
@@ -30,7 +21,7 @@
           ></span>
           <h2 class="spaceLeftRight">Personen</h2>
           <button id="personsAdd" @click="openModal('persons')">+</button>
-          <input id="personsImport" type="checkbox" />
+          <!--input id="personsImport" type="checkbox" /-->
         </span>
       </div>
       <hr />
@@ -41,13 +32,23 @@
             class="dot"
             :class="[this.countAnnouncements > 0 ? 'green' : 'red']"
           ></span>
-          <h2 class="spaceLeftRight">Announcements</h2>
+          <h2 class="spaceLeftRight">Benachrichtigungen</h2>
           <button id="announcementsAdd" @click="openModal('announcements')">
             +
           </button>
-          <input id="announcementsImport" type="checkbox" />
+          <!--input id="announcementsImport" type="checkbox" /-->
         </span>
         <!-- -->
+        <span class="horizontal">
+          <span
+            class="dot"
+            :class="[this.countTimings > 0 ? 'green' : 'red']"
+          ></span>
+          <h2 class="spaceLeftRight">Zeiten</h2>
+          <button id="timingsAdd" @click="openModal('timings')">+</button>
+          <!--input id="timingsImport" type="checkbox" /-->
+          <!-- -->
+        </span>
       </div>
     </fieldset>
   </div>
@@ -104,7 +105,7 @@ export default {
             {
               persons: this.$store.state.persons,
             },
-            { height: "auto" }
+            { height: "auto", width: "700px" }
           );
         } catch (err) {
           console.log("Error on AddPersonsPopup.");

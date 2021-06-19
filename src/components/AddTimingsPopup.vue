@@ -1,25 +1,25 @@
 <template>
   <div id="AddTimingsPopup">
-    <h1>Zeiten bearbeiten</h1>
+    <h3>Zeiten bearbeiten</h3>
     <span v-for="(item, index) in this.$store.state.timings" :key="index">
-      <span class="small" style="width: 50px">{{ index + 1 }}. Std:</span>
+      <span class="small">{{ index + 1 }}. Std:</span>
       <input :id="index + 'tStart'" class="spaceLeftRight" type="time" />
       -
       <input :id="index + 'tEnd'" class="spaceLeftRight" type="time" />
 
       <button @click="makeAction('Delete', index)" class="spaceLeftRight">
-        Delete
+        Löschen
       </button>
       <br />
     </span>
+
     <span>
       <br />
-      <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <button class="btnAddDelete" @click="makeAction('-')">-</button>
+      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
-      <button class="btnAddDelete" @click="makeAction('Show')">Show</button>
+      <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->
     </span>
   </div>
 </template>

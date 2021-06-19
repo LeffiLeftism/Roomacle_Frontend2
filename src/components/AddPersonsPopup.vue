@@ -1,6 +1,6 @@
 <template>
   <div id="AddPersonsPopup">
-    <h1>Personen bearbeiten</h1>
+    <h3>Personen bearbeiten</h3>
     <select name="person" id="person" @change="makeAction('Reset')">
       <option
         v-for="(item, index) in $store.state.persons"
@@ -16,40 +16,51 @@
     <!--button @click="makeAction('Reset')">Bearbeiten</button-->
     <hr />
     <fieldset style="text-align: left">
-      <span class="small">Name, Titel:</span>
-      <input :id="'name'" type="text" class="name" />
-      ,
-      <input :id="'titel'" type="text" class="titel" />
-      <br />
-      <span class="small">E-Mail:</span>
-      <input :id="'email'" type="mail" class="wide" />
-      <br />
-      <span class="small">Homepage:</span>
-      <input :id="'homepage'" type="url" class="wide" />
-      <br />
-      <span class="small">Tel.:</span>
-      <input :id="'telefon'" type="tel" class="wide" />
-      <br />
-      <span class="small">Büroraum:</span>
-      <input :id="'room'" type="text" class="wide" />
-      <br />
-      <span class="small">Sprechzeiten:</span>
-      <input :id="'visitTime'" type="text" class="wide" />
-      <br />
-      <span class="small">Terminkalender:</span>
-      <button class="wide" style="margin: 0 4px" @click="openModal()">
-        Termine bearbeiten
-      </button>
+      <img
+        src=""
+        height="160"
+        alt="Vorschaubild ..."
+        id="imagePerson"
+        style="border: 2px solid lightgrey; float: right; max-width: 200px"
+      />
+      <div>
+        <span class="small">Name, Titel:</span>
+        <input :id="'name'" type="text" class="name" />
+        ,
+        <input :id="'titel'" type="text" class="titel" />
+        <br />
+        <span class="small">E-Mail:</span>
+        <input :id="'email'" type="mail" class="wide" />
+        <br />
+        <span class="small">Homepage:</span>
+        <input :id="'homepage'" type="url" class="wide" />
+        <br />
+        <span class="small">Tel.:</span>
+        <input :id="'telefon'" type="tel" class="wide" />
+        <br />
+        <span class="small">Büroraum:</span>
+        <input :id="'room'" type="text" class="wide" />
+        <br />
+        <span class="small">Sprechzeiten:</span>
+        <input :id="'visitTime'" type="text" class="wide" />
+        <br />
+        <span class="small">Terminkalender:</span>
+        <button class="wide" style="margin: 0 4px" @click="openModal()">
+          Termine bearbeiten
+        </button>
+      </div>
+      <label for="imgInputPerson" class="small">Profilbild:</label>
+      <input type="file" id="imgInputPerson" name="imgInputPerson" />
+      <button @click="deleteImage()">Löschen</button>
     </fieldset>
 
     <span>
       <br />
-      <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <button class="btnAddDelete" @click="makeAction('-')">-</button>
+      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
-      <button class="btnAddDelete" @click="makeAction('Show')">Show</button>
+      <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->
     </span>
   </div>
 </template>
@@ -57,6 +68,7 @@
 
 <script>
 import AddMeetingPopup from "../components/AddMeetingPopup.vue";
+import { base64File } from "../store/index.js";
 
 export default {
   props: {
@@ -84,6 +96,9 @@ export default {
         console.log(err);
       }
     },
+    deleteImage() {
+      document.getElementById("imagePerson").src = "";
+    },
     makeAction(name) {
       if (name == "+") {
         console.log(name);
@@ -100,6 +115,7 @@ export default {
           room: "",
           visitTime: "",
           meetings: [],
+          base64Code: "",
         };
         this.$store.state.persons.push(data);
       } else if (name == "-") {
@@ -116,6 +132,7 @@ export default {
           telefon: document.getElementById("telefon").value,
           room: document.getElementById("room").value,
           visitTime: document.getElementById("visitTime").value,
+          base64Code: document.getElementById("imagePerson").src,
         };
         this.$store.commit("importPersons", {
           data: person,
@@ -137,6 +154,7 @@ export default {
           document.getElementById("telefon").value = data.telefon;
           document.getElementById("room").value = data.room;
           document.getElementById("visitTime").value = data.visitTime;
+          document.getElementById("imagePerson").src = data.base64Code;
         }
 
         //OLD
@@ -180,6 +198,18 @@ export default {
   },
   mounted() {
     this.makeAction("Reset");
+    document
+      .getElementById("imgInputPerson")
+      .addEventListener("change", function () {
+        var fr = new FileReader();
+        fr.onload = function () {
+          base64File.data = fr.result;
+          document.getElementById("imagePerson").src = fr.result;
+          console.log(base64File.data);
+        };
+
+        fr.readAsDataURL(this.files[0]);
+      });
   },
   updated() {
     this.makeAction("Reset");

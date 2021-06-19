@@ -1,7 +1,7 @@
 <template>
   <div id="AddAnnouncementsPopup">
-    <h1>Announcements bearbeiten</h1>
-    <select name="announcement" id="announcement">
+    <h3>Benachrichtigungen bearbeiten</h3>
+    <select name="announcement" id="announcement" @change="makeAction('Reset')">
       <option
         v-for="(item, index) in this.announcements"
         v-bind:key="index"
@@ -10,8 +10,10 @@
         {{ item.date }} | {{ item.title }}
       </option>
     </select>
-    <button @click="makeAction('Reset')">Bearbeiten</button>
-    <button @click="makeAction('Delete')">Löschen</button>
+    <!--button @click="makeAction('Reset')">Bearbeiten</button-->
+    <button @click="makeAction('Delete')" class="spaceLeftRight">
+      Löschen
+    </button>
     <hr />
     <fieldset>
       <span class="small">Datum:</span>
@@ -23,7 +25,7 @@
       <span class="small">Titel:</span>
       <input :id="'title'" type="text" class="wide" />
       <br />
-      <span class="small">Nachricht:</span>
+      <span class="small">Beschreibung:</span>
       <input :id="'content'" type="text" class="wide" />
       <br />
       <span class="small">Ersteller:</span>
@@ -34,10 +36,10 @@
         :id="'pinned'"
         type="checkbox"
         class="wide"
-        @click="inputDisabler('pinned', [], ['timerDateTime', 'timerActive'])"
+        @click="inputDisabler('pinned', [], ['timerActive'])"
       />
       <br />
-      <span class="small">TimerActive:</span>
+      <span class="small">Timer:</span>
       <input
         :id="'timerActive'"
         type="checkbox"
@@ -45,7 +47,7 @@
         @click="inputDisabler('timerActive', [], ['timerDateTime'])"
       />
       <br />
-      <span class="small">Timer:</span>
+      <span class="small"></span>
       <input :id="'timerDateTime'" type="datetime-local" class="wide" />
       <!--button @click="makeAction('Delete')" class="spaceLeftRight">
         Delete
@@ -55,12 +57,11 @@
 
     <span>
       <br />
-      <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <button class="btnAddDelete" @click="makeAction('-')">-</button>
+      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
-      <button class="btnAddDelete" @click="makeAction('Show')">Show</button>
+      <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->
     </span>
   </div>
 </template>

@@ -294,7 +294,6 @@
         "room": {
             "num": "A-317",
             "type": "buero",
-            "seats": "30",
             "desc": "Sekretariat"
         },
         "fachbereich": "Ing. Wissenschaften",
