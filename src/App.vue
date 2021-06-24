@@ -24,7 +24,7 @@
     </div>
     <div v-show="this.$store.state.logged_in">
       <div class="buttonrow">
-        <div style="border: 2px solid black; padding: 2px">
+        <!--div style="border: 2px solid black; padding: 2px">
           <input id="fileupload" type="file" accept=".json" />
           <span id="output"></span>
           <button
@@ -41,7 +41,8 @@
           >
             Download
           </button>
-        </div>
+        </div-->
+        <ImportExport />
         <!--button @click="importData()" class="spaceLeftRight">
           Import Data
         </button-->
@@ -65,8 +66,8 @@ import DatabaseCheck from "./components/DatabaseCheck.vue";
 import DeviceSetup from "./components/DeviceSetup.vue";
 import Login from "./components/Login.vue";
 import Logout from "./components/Logout.vue";
-import data from "./assets/data.json";
-import { asyncData } from "./store/index.js";
+import ImportExport from "./components/ImportExport.vue";
+
 
 export default {
   name: "App",
@@ -75,58 +76,14 @@ export default {
     DeviceSetup,
     Login,
     Logout,
+    ImportExport,
   },
   data() {
     return {
-      data,
       content: "",
     };
   },
   methods: {
-    async uploadData() {
-      document.getElementById("uploadButton").style.backgroundColor =
-        "lightgrey";
-      if (asyncData.database == "This is empty") {
-        console.log("Keine Datei ausgewählt.");
-      } else {
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(asyncData.database),
-        };
-        const response = await fetch("/send", options);
-        const json = await response.json();
-        console.log("Response:");
-        console.log(json);
-        this.recieveData();
-      }
-    },
-    downloadData() {
-      let store = this.$store.state;
-      let data = {};
-      data.timings = store.timings;
-      data.persons = store.persons;
-      data.meetings = store.meetings;
-      data.announcements = store.announcements;
-      data.setup = store.setup;
-      var filename = "test.json";
-      var text = JSON.stringify(data);
-      var element = document.createElement("a");
-      element.setAttribute(
-        "href",
-        "data:text/plain;charset=utf-8," + encodeURIComponent(text)
-      );
-      element.setAttribute("download", filename);
-
-      element.style.display = "none";
-      document.body.appendChild(element);
-
-      element.click();
-
-      document.body.removeChild(element);
-    },
     saveSetup() {
       let roomtype;
       let typeA = document.getElementById("buero").checked;
@@ -303,26 +260,6 @@ export default {
     showAll() {
       console.log(this.$store.state);
     },
-    saveFile: function () {
-      const data = JSON.stringify(asyncData.database);
-      console.log(data);
-      window.localStorage.setItem("database", data);
-      console.log(JSON.parse(window.localStorage.getItem("database")));
-    },
-  },
-  mounted() {
-    document
-      .getElementById("fileupload")
-      .addEventListener("change", function () {
-        var fr = new FileReader();
-        fr.onload = function () {
-          asyncData.database = JSON.parse(fr.result);
-          document.getElementById("uploadButton").style.backgroundColor =
-            "green";
-        };
-
-        fr.readAsText(this.files[0]);
-      });
   },
   watch: {
     "$store.state.logged_in": {

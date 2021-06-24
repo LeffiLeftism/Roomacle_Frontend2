@@ -17,19 +17,6 @@
                 name="roomtype"
                 id="buero"
                 value="nameA"
-                @click="
-                  inputDisabler(
-                    '',
-                    'buero',
-                    [
-                      'meetingsAdd',
-                      'meetingsImport',
-                      'timingsAdd',
-                      'timingsImport',
-                    ],
-                    ['personsAdd', 'personsImport']
-                  )
-                "
               />
               <br />
               <input
@@ -37,19 +24,6 @@
                 name="roomtype"
                 id="vl"
                 value="nameB"
-                @click="
-                  inputDisabler(
-                    '',
-                    'vl',
-                    ['personsAdd', 'personsImport'],
-                    [
-                      'meetingsAdd',
-                      'meetingsImport',
-                      'timingsAdd',
-                      'timingsImport',
-                    ]
-                  )
-                "
               />
             </div>
             <div style="text-align: left">
@@ -106,20 +80,6 @@ export default {
       } catch (err) {
         console.log("Error on LogoChanger.");
         console.log(err);
-      }
-    },
-    inputDisabler(index, idSource, idDestinationDisable, idDestinationEnable) {
-      if (typeof idDestinationDisable != "undefined") {
-        idDestinationDisable.forEach((element) => {
-          document.getElementById(index + element).disabled =
-            document.getElementById(index + idSource).checked;
-        });
-      }
-      if (typeof idDestinationEnable != "undefined") {
-        idDestinationEnable.forEach((element) => {
-          document.getElementById(index + element).disabled =
-            !document.getElementById(index + idSource).checked;
-        });
       }
     },
     writeSetup() {

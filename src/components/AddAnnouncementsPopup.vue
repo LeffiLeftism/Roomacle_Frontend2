@@ -59,7 +59,13 @@
       <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
       <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
-      <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
+      <button
+        class="btnAddDelete"
+        style="width: 80px"
+        @click="makeAction('Save')"
+      >
+        Speichern
+      </button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
       <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->
     </span>

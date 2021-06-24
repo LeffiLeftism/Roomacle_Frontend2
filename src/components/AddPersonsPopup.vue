@@ -58,9 +58,15 @@
       <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
       <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
-      <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
+      <button
+        class="btnAddDelete"
+        style="width: 80px"
+        @click="makeAction('Save')"
+      >
+        Speichern
+      </button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
-      <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->
+      <button class="btnAddDelete" @click="makeAction('Show')">Show</button>
     </span>
   </div>
 </template>
@@ -79,6 +85,9 @@ export default {
   },
   methods: {
     openModal() {
+      console.log(
+        this.$store.state.persons[document.getElementById("person").value]
+      );
       try {
         this.$modal.show(
           AddMeetingPopup,
@@ -103,6 +112,7 @@ export default {
       if (name == "+") {
         console.log(name);
         let length = this.persons.length;
+        console.log(length);
         if (length != 0) {
           this.makeAction("Save");
         }
@@ -114,16 +124,38 @@ export default {
           telefon: "",
           room: "",
           visitTime: "",
-          meetings: [],
+          meetings: [
+            {
+              num: "",
+              name: "",
+              name_short: "",
+              std_start: Number("1"),
+              duration: Number("2"),
+              roomnumber: "",
+              date: {
+                start: "",
+                repeatedly: "",
+                end: "",
+                infinity: true,
+              },
+              semester: "",
+              studigang: "",
+              dozent: "",
+              pinned: false,
+            },
+          ],
           base64Code: "",
         };
+        console.log("Add Person");
         this.$store.state.persons.push(data);
+        console.log(data);
       } else if (name == "-") {
         console.log(name);
         this.persons.pop();
       } else if (name == "Save") {
         console.log(name);
         const index = document.getElementById("person").value;
+        let oldMeetings = this.persons[index].meetings;
         let person = {
           name: document.getElementById("name").value,
           titel: document.getElementById("titel").value,
@@ -133,14 +165,17 @@ export default {
           room: document.getElementById("room").value,
           visitTime: document.getElementById("visitTime").value,
           base64Code: document.getElementById("imagePerson").src,
+          meetings: oldMeetings,
         };
+        console.log(person);
         this.$store.commit("importPersons", {
           data: person,
           index: index,
         });
-        console.log(person);
+        //console.log(person);
       } else if (name == "Reset") {
         console.log(name);
+        console.log(this.persons);
         if (this.persons.length == 0) {
           this.makeAction("+");
           document.getElementById("person").value = 0;

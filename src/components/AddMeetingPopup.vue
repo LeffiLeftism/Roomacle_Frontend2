@@ -82,7 +82,13 @@
       <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
       <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
-      <button class="btnAddDelete" @click="makeAction('Save')">Save</button>
+      <button
+        class="btnAddDelete"
+        style="width: 80px"
+        @click="makeAction('Save')"
+      >
+        Speichern
+      </button>
       <button class="btnAddDelete" @click="makeAction('Reset')">Reset</button>
       <!--button class="btnAddDelete" @click="makeAction('Show')">Show</button-->
     </span>
@@ -210,7 +216,6 @@ export default {
         } else {
           const index = document.getElementById("meeting").value;
           let data = this.meetings[index];
-          console.log(data);
           document.getElementById("num").value = data.num;
           document.getElementById("meetings_name").value = data.name;
           document.getElementById("name_short").value = data.name_short;
