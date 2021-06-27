@@ -98,7 +98,7 @@ export default {
     recieveData: async function () {
       //Fragt die Daten des Backends an und schreibt diese in den lokalen Speicher
       let response;
-      console.log("Recieve all Data");
+      //("Recieve all Data");
       const options = {
         method: "POST",
         headers: {

@@ -102,7 +102,7 @@ export default {
     "$store.state.setup": {
       //Überwacht Setup-Speicherplatz, bei Änderungen wird Funktion ausgeführt
       handler: function () {
-        console.log("Setup updated!");
+        //console.log("Setup updated!");
         this.writeSetup();
       },
     },

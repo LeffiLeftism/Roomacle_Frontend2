@@ -108,7 +108,7 @@ export default {
     makeAction(name) {
       if (name == "+") {
         //Fügt einen neuen Datensatz hinzu
-        console.log(name);
+        //console.log(name);
         let length = this.persons.length;
         if (length != 0) {
           //Wenn Datensätze vorhanden, werden dieses zuerst gespeichert
@@ -147,11 +147,11 @@ export default {
         this.$store.state.persons.push(data);
       } else if (name == "-") {
         //Löscht den letzten im Array stehenden Datensatz
-        console.log(name);
+        //console.log(name);
         this.persons.pop();
       } else if (name == "Save") {
         //Liest die Eingabefelder aus und Speichert diese lokal
-        console.log(name);
+        //console.log(name);
         const index = document.getElementById("person").value;
         let oldMeetings = this.persons[index].meetings;
         let person = {
@@ -172,7 +172,7 @@ export default {
         });
       } else if (name == "Reset") {
         //Schreibt die Daten erneut aus lokalem Speicher in die Eingabefelder
-        console.log(name);
+        //console.log(name);
         if (this.persons.length == 0) {
           this.makeAction("+");
           document.getElementById("person").value = 0;
@@ -190,12 +190,12 @@ export default {
         }
       } else if (name == "Show") {
         //Zeigt die lokale gespeicherten Personen in der Konsole
-        console.log(name);
+        //console.log(name);
         let data = this.persons;
         console.log(data);
       } else if (name == "Delete") {
         //Löscht die Daten der gewählten Zeile aus lokalem Speicher
-        console.log(name);
+        //console.log(name);
         this.makeAction("Reset");
         const index = Number(document.getElementById("person").value);
         let data = this.persons;
@@ -224,7 +224,7 @@ export default {
         fr.onload = function () {
           base64File.data = fr.result;
           document.getElementById("imagePerson").src = fr.result;
-          console.log(base64File.data);
+          //console.log(base64File.data);
         };
         fr.readAsDataURL(this.files[0]);
       });

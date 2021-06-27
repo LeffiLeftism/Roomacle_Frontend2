@@ -25,12 +25,12 @@ export default {
   methods: {
     checkPW: async function () {
       //Sendet Eingabe aus Textfeld an Backend zur Überprüfung
-      console.log("Login");
+      //console.log("Login");
       let data = {};
       data.input = document.getElementById("pw").value;
-      console.log("Check PW");
-      console.log("Input: ");
-      console.log(data);
+      //console.log("Check PW");
+      //console.log("Input: ");
+      //console.log(data);
       const options = {
         method: "POST",
         headers: {
@@ -40,13 +40,13 @@ export default {
       };
       const response = await fetch("/pw", options);
       const json = await response.json();
-      console.log("Response:");
+      //console.log("Response:");
       //Antwort des Backends wird ausgewertet
       if (json == "correct password") {
-        console.log("Correct Password");
+        //console.log("Correct Password");
         this.$store.state.logged_in = true;
       } else {
-        console.log("Wrong Password");
+        //console.log("Wrong Password");
         document.getElementById("pw").value = "";
         this.$store.state.logged_in = false;
       }

@@ -94,7 +94,7 @@ export default {
     makeAction(name) {
       if (name == "+") {
         //Fügt einen neuen Datensatz hinzu
-        console.log(name);
+        //console.log(name);
         let length = this.announcements.length;
         if (length != 0) {
           //Wenn Datensätze vorhanden, werden dieses zuerst gespeichert
@@ -112,7 +112,7 @@ export default {
         this.$store.state.announcements.push(data);
       } else if (name == "-") {
         //Löscht den letzten im Array stehenden Datensatz
-        console.log(name);
+        //console.log(name);
         this.announcements.pop();
       } else if (name == "Save") {
         //Liest die Eingabefelder aus und Speichert diese lokal
@@ -137,7 +137,7 @@ export default {
         });
       } else if (name == "Reset") {
         //Schreibt die Daten erneut aus lokalem Speicher in die Eingabefelder
-        console.log(name);
+        //console.log(name);
         if (this.announcements.length == 0) {
           this.makeAction("+");
           document.getElementById("announcement").value = 0;
@@ -170,12 +170,12 @@ export default {
         }
       } else if (name == "Show") {
         //Zeigt die lokale gespeicherten Veranstaltungen in der Konsole
-        console.log(name);
+        //console.log(name);
         let data = this.announcements;
         console.log(data);
       } else if (name == "Delete") {
         //Löscht die Daten der gewählten Zeile aus lokalem Speicher
-        console.log(name);
+        //console.log(name);
         this.makeAction("Reset");
         const index = Number(document.getElementById("announcement").value);
         let data = this.announcements;
@@ -184,7 +184,7 @@ export default {
         }
         this.makeAction("-");
       } else {
-        console.log("Error: On makeAction");
+        //console.log("Error: On AnnouncementsPopup makeAction");
       }
     },
     moveInArray(pos1, pos2, array) {
@@ -192,7 +192,7 @@ export default {
       let spacer = array[pos1];
       array[pos1] = array[pos2];
       array[pos2] = spacer;
-      console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
+      //console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
     },
   },
   mounted() {

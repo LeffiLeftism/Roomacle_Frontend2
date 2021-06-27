@@ -45,7 +45,7 @@ export default {
           //Schreibt Inhalt der Datei im JSON-Format in eine observable Variable
           base64File.data = fr.result;
           document.getElementById("imageLogo").src = fr.result;
-          console.log(base64File.data);
+          //console.log(base64File.data);
         };
         fr.readAsDataURL(this.files[0]);
       });

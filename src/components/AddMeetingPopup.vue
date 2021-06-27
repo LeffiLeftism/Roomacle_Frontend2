@@ -128,7 +128,7 @@ export default {
     makeAction(name) {
       if (name == "+") {
         //Fügt einen neuen Datensatz hinzu
-        console.log(name);
+        //console.log(name);
         let length = this.meetings.length;
         if (length != 0) {
           //Wenn Datensätze vorhanden, werden dieses zuerst gespeichert
@@ -163,11 +163,11 @@ export default {
         }
       } else if (name == "-") {
         //Löscht den letzten im Array stehenden Datensatz
-        console.log(name);
+        //console.log(name);
         this.meetings.pop();
       } else if (name == "Save") {
         //Liest die Eingabefelder aus und Speichert diese lokal
-        console.log(name);
+        //console.log(name);
         let index = document.getElementById("meeting").value;
         if (!index) {
           index = 0;
@@ -201,9 +201,9 @@ export default {
             index: index,
           });
         } else if (this.type == "persons") {
-          console.log(meeting);
-          console.log(index);
-          console.log(this.person_index);
+          //console.log(meeting);
+          //console.log(index);
+          //console.log(this.person_index);
           this.$store.commit("importMeetingsPerson", {
             data: meeting,
             index: index,
@@ -212,7 +212,7 @@ export default {
         }
       } else if (name == "Reset") {
         //Schreibt die Daten erneut aus lokalem Speicher in die Eingabefelder
-        console.log(name);
+        //console.log(name);
         if (this.meetings.length == 0) {
           this.makeAction("+");
           document.getElementById("meeting").value = 0;
@@ -244,12 +244,12 @@ export default {
         }
       } else if (name == "Show") {
         //Zeigt die lokale gespeicherten Veranstaltungen in der Konsole
-        console.log(name);
+        //console.log(name);
         let data = this.meetings;
         console.log(data);
       } else if (name == "Delete") {
         //Löscht die Daten der gewählten Zeile aus lokalem Speicher
-        console.log(name);
+        //console.log(name);
         this.makeAction("Reset");
         const index = Number(document.getElementById("meeting").value);
         let data = this.meetings;
@@ -258,7 +258,7 @@ export default {
         }
         this.makeAction("-");
       } else {
-        console.log("Error: On makeAction");
+        console.log("Error: On AddMeetingPopup makeAction");
       }
     },
     moveInArray(pos1, pos2, array) {
