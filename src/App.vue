@@ -92,8 +92,8 @@ export default {
       };
       const response = await fetch("/send", options);
       const json = await response.json();
-      //console.log("Response:");
-      //console.log(json);
+      console.log("Response:");
+      console.log(json);
     },
     recieveData: async function () {
       //Fragt die Daten des Backends an und schreibt diese in den lokalen Speicher
