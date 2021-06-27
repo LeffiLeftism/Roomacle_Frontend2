@@ -40,4 +40,4 @@ npm run build
 
 Copy files from \dist\ to \Roomacle_Backend\Frontend1\ or \Roomacle_Backend\Frontend2\ to update the website
 
-During editing with Vue, the web page cannot communicate with the backend. To bypass password protection while editing, the logged_in variable can be set to true in the index.js file.
+During editing with Vue, the web page cannot communicate with the backend. To bypass password protection while editing, the logged_in variable can be set to true in \src\store\index.js\ .
