@@ -72,7 +72,7 @@ export default {
     document
       .getElementById("fileupload")
       .addEventListener("change", function () {
-        //Liest Dateiauswahl aus, konvertiert zu Base64
+        //Liest Dateiauswahl aus, konvertiert zu JSON-Format
         var fr = new FileReader();
         fr.onload = function () {
           //Schreibt Inhalt der Datei im JSON-Format in eine observable Variable
