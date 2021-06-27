@@ -1,9 +1,32 @@
-# inputwebsite
+# Frontend2
 
-## Project setup
+Install NodeJS from [NodeJS-Website](https://nodejs.org/en/)
+
+Go to your project directory and follow these steps:
+
+### Update/Install Dependencies
 ```
 npm install
 ```
+
+### Install VueCLI
+
+```
+npm install -g @vue/cli
+```
+
+### Update VueCLI
+```
+npm update -g @vue/cli
+```
+
+### Open VUe GUI
+```
+vue ui
+```
+
+Here u can import the the project to edit with vue
+
 
 ### Compiles and hot-reloads for development
 ```
@@ -15,21 +38,4 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### Installed packages
-[Vue modal 2.0 (Popup)](https://vuejsexamples.com/simple-to-use-and-highly-customizable-vue-js-2-0-modal/)
-```
-npm install vue-js-modal
-```
-
-[Vuex](https://vuex.vuejs.org/guide/)
-```
-npm install vuex
-```
+Copy files from \dist\ to \Roomacle_Backend\Frontend1\ or \Roomacle_Backend\Frontend2\ to update the website
