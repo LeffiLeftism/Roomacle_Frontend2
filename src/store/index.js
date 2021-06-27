@@ -20,7 +20,7 @@ export default new Vuex.Store({
         persons: [],
         announcements: [],
         setup: {},
-        logged_in: true,
+        logged_in: false,
     },
     getters: {},
     mutations: {
