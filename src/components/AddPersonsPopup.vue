@@ -53,11 +53,9 @@
       <input type="file" id="imgInputPerson" name="imgInputPerson" />
       <button @click="deleteImage()">Löschen</button>
     </fieldset>
-
     <span>
       <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button
         class="btnAddDelete"
         style="width: 80px"
@@ -85,9 +83,7 @@ export default {
   },
   methods: {
     openModal() {
-      console.log(
-        this.$store.state.persons[document.getElementById("person").value]
-      );
+      //Öffnet Popup "AddMeetingPopup" zur Veranstaltungserstellung
       try {
         this.$modal.show(
           AddMeetingPopup,
@@ -106,14 +102,16 @@ export default {
       }
     },
     deleteImage() {
+      //Löscht das Bild aus dem Vorschaubild
       document.getElementById("imagePerson").src = "";
     },
     makeAction(name) {
       if (name == "+") {
+        //Fügt einen neuen Datensatz hinzu
         console.log(name);
         let length = this.persons.length;
-        console.log(length);
         if (length != 0) {
+          //Wenn Datensätze vorhanden, werden dieses zuerst gespeichert
           this.makeAction("Save");
         }
         let data = {
@@ -146,13 +144,13 @@ export default {
           ],
           base64Code: "",
         };
-        console.log("Add Person");
         this.$store.state.persons.push(data);
-        console.log(data);
       } else if (name == "-") {
+        //Löscht den letzten im Array stehenden Datensatz
         console.log(name);
         this.persons.pop();
       } else if (name == "Save") {
+        //Liest die Eingabefelder aus und Speichert diese lokal
         console.log(name);
         const index = document.getElementById("person").value;
         let oldMeetings = this.persons[index].meetings;
@@ -167,15 +165,14 @@ export default {
           base64Code: document.getElementById("imagePerson").src,
           meetings: oldMeetings,
         };
-        console.log(person);
+        //console.log(person);
         this.$store.commit("importPersons", {
           data: person,
           index: index,
         });
-        //console.log(person);
       } else if (name == "Reset") {
+        //Schreibt die Daten erneut aus lokalem Speicher in die Eingabefelder
         console.log(name);
-        console.log(this.persons);
         if (this.persons.length == 0) {
           this.makeAction("+");
           document.getElementById("person").value = 0;
@@ -191,44 +188,30 @@ export default {
           document.getElementById("visitTime").value = data.visitTime;
           document.getElementById("imagePerson").src = data.base64Code;
         }
-
-        //OLD
-        /*for (let index = 0; index < this.$store.state.persons.length; index++) {
-          const index = document.getElementById("person").value;
-          let data = this.$store.state.persons[index];
-          document.getElementById("name").value = data.name;
-          document.getElementById("titel").value = data.titel;
-          document.getElementById("email").value = data.email;
-          document.getElementById("homepage").value = data.homepage;
-          document.getElementById("telefon").value = data.telefon;
-          document.getElementById("room").value = data.room;
-          document.getElementById("visitTime").value = data.visitTime;
-        }*/
       } else if (name == "Show") {
+        //Zeigt die lokale gespeicherten Personen in der Konsole
         console.log(name);
         let data = this.persons;
         console.log(data);
       } else if (name == "Delete") {
+        //Löscht die Daten der gewählten Zeile aus lokalem Speicher
         console.log(name);
         this.makeAction("Reset");
         const index = Number(document.getElementById("person").value);
-        console.log("Ind: " + index);
         let data = this.persons;
         for (var n = index; n < data.length - 1; n++) {
-          //console.log("n: " + n);
           this.moveInArray(n + 1, n, data);
-          //console.log("--------------");
         }
         this.makeAction("-");
       } else {
-        console.log("Error: On makeAction");
+        console.log("Error: On AddPersonsPopup makeAction");
       }
     },
     moveInArray(pos1, pos2, array) {
+      //Tauscht in einem Array die Elemente an pos1 und pos2
       let spacer = array[pos1];
       array[pos1] = array[pos2];
       array[pos2] = spacer;
-      console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
     },
   },
   mounted() {
@@ -236,13 +219,13 @@ export default {
     document
       .getElementById("imgInputPerson")
       .addEventListener("change", function () {
+        //Liest Bild aus Dateiauswahl aus und speichert als Base64 in observable Variable
         var fr = new FileReader();
         fr.onload = function () {
           base64File.data = fr.result;
           document.getElementById("imagePerson").src = fr.result;
           console.log(base64File.data);
         };
-
         fr.readAsDataURL(this.files[0]);
       });
   },

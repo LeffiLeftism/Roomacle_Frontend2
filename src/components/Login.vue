@@ -17,13 +17,6 @@
     >
       Login
     </button>
-    <button
-      v-show="this.$store.state.logged_in == true"
-      @click="logout()"
-      id="bt_logout"
-    >
-      Logout
-    </button>
   </div>
 </template>
 
@@ -31,6 +24,7 @@
 export default {
   methods: {
     checkPW: async function () {
+      //Sendet Eingabe aus Textfeld an Backend zur Überprüfung
       console.log("Login");
       let data = {};
       data.input = document.getElementById("pw").value;
@@ -47,7 +41,7 @@ export default {
       const response = await fetch("/pw", options);
       const json = await response.json();
       console.log("Response:");
-      
+      //Antwort des Backends wird ausgewertet
       if (json == "correct password") {
         console.log("Correct Password");
         this.$store.state.logged_in = true;
@@ -56,17 +50,6 @@ export default {
         document.getElementById("pw").value = "";
         this.$store.state.logged_in = false;
       }
-      console.log(this.$store.state.logged_in);
-    },
-    logout() {
-      console.log("Logout");
-      document.getElementById("pw").value = "";
-      this.$store.state.logged_in = false;
-    },
-  },
-  watch: {
-    "$store.state.logged_in": function () {
-      console.log("Watching Logged_in state");
     },
   },
 };

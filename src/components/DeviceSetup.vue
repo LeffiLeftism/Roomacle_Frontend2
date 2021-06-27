@@ -75,6 +75,7 @@ export default {
   components: {},
   methods: {
     openModal() {
+      //Öffnet das Popup mit LogoChanger Komponente
       try {
         this.$modal.show(LogoChanger, {}, { height: "auto", width: "610px" });
       } catch (err) {
@@ -83,8 +84,8 @@ export default {
       }
     },
     writeSetup() {
+      //Schreibt Setupdaten aus lokalem Speicher in Eingabefelder
       let data = this.$store.state.setup;
-
       document.getElementById("raumnummer").value = data.room.num;
       document.getElementById("fachbereich").value = data.fachbereich;
       document.getElementById("studienbereich").value = data.studienbereich;
@@ -99,6 +100,7 @@ export default {
   },
   watch: {
     "$store.state.setup": {
+      //Überwacht Setup-Speicherplatz, bei Änderungen wird Funktion ausgeführt
       handler: function () {
         console.log("Setup updated!");
         this.writeSetup();
@@ -107,6 +109,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

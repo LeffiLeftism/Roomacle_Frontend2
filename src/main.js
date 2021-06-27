@@ -6,7 +6,6 @@ import VModal from 'vue-js-modal'
 
 Vue.use(VModal, {
   dynamicDefaults: {
-    //adaptive: true,
     scrollable: true,
   }
 })

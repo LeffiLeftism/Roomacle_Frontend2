@@ -16,7 +16,6 @@
     <span>
       <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button
         class="btnAddDelete"
         style="width: 80px"
@@ -31,17 +30,12 @@
 </template>
 
 <script>
-import data from "../assets/data.json";
 
 export default {
-  data() {
-    return {
-      data,
-    };
-  },
   methods: {
     makeAction(name, ind) {
       if (name == "+") {
+        //Fügt einen neuen Datensatz hinzu
         console.log(name);
         this.makeAction("Save");
         let timing = {
@@ -50,9 +44,11 @@ export default {
         };
         this.$store.state.timings.push(timing);
       } else if (name == "-") {
+        //Löscht den letzten im Array stehenden Datensatz
         console.log(name);
         this.$store.state.timings.pop();
       } else if (name == "Save") {
+        //Liest die Eingabefelder aus und Speichert diese lokal
         console.log(name);
         let data = [];
         for (let index = 0; index < this.$store.state.timings.length; index++) {
@@ -65,8 +61,8 @@ export default {
         this.$store.commit("importTimings", {
           data: data,
         });
-        console.log(data);
       } else if (name == "Reset") {
+        //Schreibt die Daten erneut aus lokalem Speicher in die Eingabefelder
         console.log(name);
         let data = this.$store.state.timings;
         for (let index = 0; index < data.length; index++) {
@@ -74,12 +70,13 @@ export default {
           document.getElementById(index + "tEnd").value = data[index].tEnd;
         }
       } else if (name == "Show") {
+        //Zeigt die lokale gespeicherten Zeiten in der Konsole
         console.log(name);
         let data = this.$store.state.timings;
         console.log(data);
       } else if (name == "Delete") {
+        //Löscht die Daten der gewählten Zeile aus lokalem Speicher
         console.log(name);
-        console.log("Ind: " + ind);
         let data = this.$store.state.timings;
         for (let n = ind; n < data.length - 1; n++) {
           console.log("N: " + n);
@@ -87,17 +84,16 @@ export default {
         }
         this.makeAction("-");
       } else {
-        console.log("Error: On makeAction");
+        console.log("Error: On AddTimingsPopup makeAction");
       }
     },
     moveInArray(pos1, pos2, array) {
+      //Tauscht in einem Array die Elemente an pos1 und pos2
       let spacer = array[pos1];
       array[pos1] = array[pos2];
       array[pos2] = spacer;
-      console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
     },
   },
-  created() {},
   mounted() {
     this.makeAction("Reset");
   },

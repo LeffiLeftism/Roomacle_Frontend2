@@ -27,8 +27,10 @@ import { base64File } from "../store/index.js";
 export default {
   methods: {
     saveLogo() {
+      //Speichert das Logo als Base64 lokal ab
       this.$store.state.setup.base64Code =
         document.getElementById("imageLogo").src;
+      //Schreibt das Logo aus dem Vorschaubild in das Logofeld in App.vue
       document.getElementById("logo").src =
         document.getElementById("imageLogo").src;
     },
@@ -37,13 +39,14 @@ export default {
     document
       .getElementById("imgLogoInput")
       .addEventListener("change", function () {
+        //Liest Dateiauswahl aus, konvertiert zu Base64
         var fr = new FileReader();
         fr.onload = function () {
+          //Schreibt Inhalt der Datei im JSON-Format in eine observable Variable
           base64File.data = fr.result;
           document.getElementById("imageLogo").src = fr.result;
           console.log(base64File.data);
         };
-
         fr.readAsDataURL(this.files[0]);
       });
   },

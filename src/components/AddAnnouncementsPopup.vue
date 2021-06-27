@@ -10,7 +10,6 @@
         {{ item.date }} | {{ item.title }}
       </option>
     </select>
-    <!--button @click="makeAction('Reset')">Bearbeiten</button-->
     <button @click="makeAction('Delete')" class="spaceLeftRight">
       Löschen
     </button>
@@ -49,16 +48,12 @@
       <br />
       <span class="small"></span>
       <input :id="'timerDateTime'" type="datetime-local" class="wide" />
-      <!--button @click="makeAction('Delete')" class="spaceLeftRight">
-        Delete
-      </button-->
       <br />
     </fieldset>
 
     <span>
       <br />
       <button class="btnAddDelete" @click="makeAction('+')">+</button>
-      <!--button class="btnAddDelete" @click="makeAction('-')">-</button-->
       <button
         class="btnAddDelete"
         style="width: 80px"
@@ -73,19 +68,16 @@
 </template>
 
 <script>
-import data from "../assets/data.json";
-
 export default {
   props: {
     announcements: Array,
   },
-  data() {
-    return {
-      data,
-    };
-  },
   methods: {
     inputDisabler(idSource, idDestinationDisable, idDestinationEnable) {
+      //Aktiviert und Deaktiviert Eingabemöglichkeiten
+      //idSource = Quelle, auf derer Eingabe Elemente aktiviert und deaktiviert werden
+      //idDestinationDisable = Elemente, welche deaktiviert werden sollen
+      //idDestinationEnable = Elemente, welche aktiviert werden sollen
       if (typeof idDestinationDisable != "undefined") {
         idDestinationDisable.forEach((element) => {
           document.getElementById(element).disabled =
@@ -101,9 +93,11 @@ export default {
     },
     makeAction(name) {
       if (name == "+") {
+        //Fügt einen neuen Datensatz hinzu
         console.log(name);
         let length = this.announcements.length;
         if (length != 0) {
+          //Wenn Datensätze vorhanden, werden dieses zuerst gespeichert
           this.makeAction("Save");
         }
         let data = {
@@ -117,9 +111,11 @@ export default {
         };
         this.$store.state.announcements.push(data);
       } else if (name == "-") {
+        //Löscht den letzten im Array stehenden Datensatz
         console.log(name);
         this.announcements.pop();
       } else if (name == "Save") {
+        //Liest die Eingabefelder aus und Speichert diese lokal
         console.log(name);
         const index = document.getElementById("announcement").value;
 
@@ -139,8 +135,8 @@ export default {
           data: announcement,
           index: index,
         });
-        console.log(announcement);
       } else if (name == "Reset") {
+        //Schreibt die Daten erneut aus lokalem Speicher in die Eingabefelder
         console.log(name);
         if (this.announcements.length == 0) {
           this.makeAction("+");
@@ -173,19 +169,18 @@ export default {
           }
         }
       } else if (name == "Show") {
+        //Zeigt die lokale gespeicherten Veranstaltungen in der Konsole
         console.log(name);
         let data = this.announcements;
         console.log(data);
       } else if (name == "Delete") {
+        //Löscht die Daten der gewählten Zeile aus lokalem Speicher
         console.log(name);
         this.makeAction("Reset");
         const index = Number(document.getElementById("announcement").value);
-        console.log("Ind: " + index);
         let data = this.announcements;
         for (var n = index; n < data.length - 1; n++) {
-          //console.log("n: " + n);
           this.moveInArray(n + 1, n, data);
-          //console.log("--------------");
         }
         this.makeAction("-");
       } else {
@@ -193,13 +188,13 @@ export default {
       }
     },
     moveInArray(pos1, pos2, array) {
+      //Tauscht in einem Array die Elemente an pos1 und pos2
       let spacer = array[pos1];
       array[pos1] = array[pos2];
       array[pos2] = spacer;
       console.log("Moved " + pos1 + " to " + pos2 + "on Array " + array);
     },
   },
-  created() {},
   mounted() {
     this.makeAction("Reset");
   },

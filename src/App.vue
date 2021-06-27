@@ -24,33 +24,7 @@
     </div>
     <div v-show="this.$store.state.logged_in">
       <div class="buttonrow">
-        <!--div style="border: 2px solid black; padding: 2px">
-          <input id="fileupload" type="file" accept=".json" />
-          <span id="output"></span>
-          <button
-            @click="uploadData()"
-            class="spaceLeftRight"
-            id="uploadButton"
-          >
-            Upload
-          </button>
-          <button
-            @click="downloadData()"
-            class="spaceLeftRight"
-            id="downloadButton"
-          >
-            Download
-          </button>
-        </div-->
         <ImportExport />
-        <!--button @click="importData()" class="spaceLeftRight">
-          Import Data
-        </button-->
-        <!--button @click="showAll()" class="spaceLeftRight">SHOW ALL</button>
-        <button @click="sendData()" class="spaceLeftRight">Send Data</button-->
-        <!--button @click="recieveData()" class="spaceLeftRight">
-          RECIEVE ALL DATA
-      </button-->
         <Logout class="spaceLeftRight" style="margin-top: 4px" />
       </div>
       <hr />
@@ -68,7 +42,6 @@ import Login from "./components/Login.vue";
 import Logout from "./components/Logout.vue";
 import ImportExport from "./components/ImportExport.vue";
 
-
 export default {
   name: "App",
   components: {
@@ -78,13 +51,9 @@ export default {
     Logout,
     ImportExport,
   },
-  data() {
-    return {
-      content: "",
-    };
-  },
   methods: {
     saveSetup() {
+      //Liets Eingabefelder des Setups aus und speichert diese lokal
       let roomtype;
       let typeA = document.getElementById("buero").checked;
       let typeB = document.getElementById("vl").checked;
@@ -103,20 +72,17 @@ export default {
         fachbereich: document.getElementById("fachbereich").value,
         studienbereich: document.getElementById("studienbereich").value,
       };
-      //console.log(data);
       this.$store.state.setup = data;
     },
     sendData: async function () {
+      //Pakt Daten in data zusammen und sendet diese Daten an das Backend
       this.saveSetup();
-      console.log("Send all Data");
       let data = {};
       data.timings = this.$store.state.timings;
       data.meetings = this.$store.state.meetings;
       data.persons = this.$store.state.persons;
       data.setup = this.$store.state.setup;
       data.announcements = this.$store.state.announcements;
-      console.log("Data send:");
-      console.log(data);
       const options = {
         method: "POST",
         headers: {
@@ -126,10 +92,11 @@ export default {
       };
       const response = await fetch("/send", options);
       const json = await response.json();
-      console.log("Response:");
-      console.log(json);
+      //console.log("Response:");
+      //console.log(json);
     },
     recieveData: async function () {
+      //Fragt die Daten des Backends an und schreibt diese in den lokalen Speicher
       let response;
       console.log("Recieve all Data");
       const options = {
@@ -142,7 +109,7 @@ export default {
         type: "",
       };
       let json = [];
-
+      //Daten werden für die einzelnen Kategorien angefragt
       data.type = "timings";
       options.body = JSON.stringify(data);
       response = await fetch("/recieve", options);
@@ -196,73 +163,13 @@ export default {
       this.$store.commit("importSetup", {
         data: json.setup[0],
       });
-
-      console.log("Response:");
-      console.log(json);
-    },
-
-    importData() {
-      console.log("Import Data");
-      if (document.getElementById("timingsImport").checked) {
-        this.$store.commit("importTimings", {
-          data: this.data.timings,
-        });
-      }
-      if (document.getElementById("meetingsImport").checked) {
-        for (let index = 0; index < this.data.meetings.length; index++) {
-          const element = this.data.meetings[index];
-          this.$store.commit("importMeetings", {
-            data: element,
-            index: index,
-          });
-        }
-      }
-      if (document.getElementById("personsImport").checked) {
-        for (let index = 0; index < this.data.persons.length; index++) {
-          const element = this.data.persons[index];
-          this.$store.commit("importPersons", {
-            data: element,
-            index: index,
-          });
-        }
-      }
-      if (document.getElementById("announcementsImport").checked) {
-        for (let index = 0; index < this.data.announcements.length; index++) {
-          const element = this.data.announcements[index];
-          this.$store.commit("importAnnouncements", {
-            data: element,
-            index: index,
-          });
-        }
-      }
-
-      console.log(this.$store.state.announcements.length);
-      console.log(this.$store.state.persons.length);
-
-      // Setup wird importiert und angezeigt
-      this.$store.commit("importSetup", {
-        data: this.data.setup,
-      });
-      console.log(this.$store.state);
-
-      if (this.$store.state.setup.room.type == "buero") {
-        document.getElementById("buero").checked = true;
-      } else if (this.$store.state.setup.room.type == "vl") {
-        document.getElementById("vl").checked = true;
-      }
-      document.getElementById("raumnummer").value =
-        this.$store.state.setup.room.num;
-      document.getElementById("fachbereich").value =
-        this.$store.state.setup.fachbereich;
-      document.getElementById("studienbereich").value =
-        this.$store.state.setup.studienbereich;
-    },
-    showAll() {
-      console.log(this.$store.state);
+      //console.log("Response:");
+      //console.log(json);
     },
   },
   watch: {
     "$store.state.logged_in": {
+      //Überprüft Login Status, wenn dieser sich ändert werden die Daten empfangen
       handler: function () {
         this.recieveData();
       },
